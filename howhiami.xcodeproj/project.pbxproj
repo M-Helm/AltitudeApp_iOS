@@ -7,13 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD33D61E1ADDC6D2000955F8 /* DisplayContentSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = AD33D61D1ADDC6D2000955F8 /* DisplayContentSegue.m */; };
+		AD33D6211ADDC751000955F8 /* MenuDrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD33D6201ADDC751000955F8 /* MenuDrawViewController.m */; };
+		AD33D6241ADDC7A3000955F8 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD33D6231ADDC7A3000955F8 /* MenuViewController.m */; };
+		ADB7D96F1ADC4A3F00761587 /* fact_list_20150413.txt in Resources */ = {isa = PBXBuildFile; fileRef = ADB7D96E1ADC4A3F00761587 /* fact_list_20150413.txt */; };
+		ADBE010B1AD9B6A00068BBE7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBE010A1AD9B6A00068BBE7 /* libsqlite3.dylib */; };
+		ADBE010E1AD9B70A0068BBE7 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ADBE010D1AD9B70A0068BBE7 /* DBManager.m */; };
+		ADDFC50E1ADECD1E00634087 /* ButtonHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = ADDFC50D1ADECD1E00634087 /* ButtonHandler.m */; };
+		ADDFC5121ADED49B00634087 /* ic_burger_44.png in Resources */ = {isa = PBXBuildFile; fileRef = ADDFC5111ADED49B00634087 /* ic_burger_44.png */; };
+		ADDFC5141ADEFC3500634087 /* readme.md in Sources */ = {isa = PBXBuildFile; fileRef = ADDFC5131ADEFC3500634087 /* readme.md */; };
 		ADECAAC21AD1E03E00779B02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ADECAAC11AD1E03E00779B02 /* main.m */; };
 		ADECAAC51AD1E03E00779B02 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ADECAAC41AD1E03E00779B02 /* AppDelegate.m */; };
-		ADECAAC81AD1E03E00779B02 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ADECAAC71AD1E03E00779B02 /* ViewController.m */; };
+		ADECAAC81AD1E03E00779B02 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ADECAAC71AD1E03E00779B02 /* MainViewController.m */; };
 		ADECAACB1AD1E03E00779B02 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADECAAC91AD1E03E00779B02 /* Main.storyboard */; };
 		ADECAACD1AD1E03E00779B02 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADECAACC1AD1E03E00779B02 /* Images.xcassets */; };
 		ADECAAD01AD1E03E00779B02 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADECAACE1AD1E03E00779B02 /* LaunchScreen.xib */; };
 		ADECAADC1AD1E03E00779B02 /* howhiamiTests.m in Sources */ = {isa = PBXBuildFile; fileRef = ADECAADB1AD1E03E00779B02 /* howhiamiTests.m */; };
+		ADECAAE61AD1E08900779B02 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ADECAAE51AD1E08900779B02 /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,19 +37,34 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AD33D61C1ADDC68B000955F8 /* DisplayContentSegue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DisplayContentSegue.h; sourceTree = "<group>"; };
+		AD33D61D1ADDC6D2000955F8 /* DisplayContentSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DisplayContentSegue.m; sourceTree = "<group>"; };
+		AD33D61F1ADDC71B000955F8 /* MenuDrawViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuDrawViewController.h; sourceTree = "<group>"; };
+		AD33D6201ADDC751000955F8 /* MenuDrawViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuDrawViewController.m; sourceTree = "<group>"; };
+		AD33D6221ADDC776000955F8 /* MenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
+		AD33D6231ADDC7A3000955F8 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		ADB7D96E1ADC4A3F00761587 /* fact_list_20150413.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fact_list_20150413.txt; sourceTree = "<group>"; };
+		ADBE010A1AD9B6A00068BBE7 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		ADBE010C1AD9B6F50068BBE7 /* DBManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
+		ADBE010D1AD9B70A0068BBE7 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
+		ADDFC50C1ADECCFC00634087 /* ButtonHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonHandler.h; sourceTree = "<group>"; };
+		ADDFC50D1ADECD1E00634087 /* ButtonHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonHandler.m; sourceTree = "<group>"; };
+		ADDFC5111ADED49B00634087 /* ic_burger_44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_burger_44.png; path = ../../../Timbr/singlebeards/Timber/ic_burger_44.png; sourceTree = "<group>"; };
+		ADDFC5131ADEFC3500634087 /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = readme.md; sourceTree = "<group>"; };
 		ADECAABC1AD1E03E00779B02 /* howhiami.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = howhiami.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADECAAC01AD1E03E00779B02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADECAAC11AD1E03E00779B02 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		ADECAAC31AD1E03E00779B02 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		ADECAAC41AD1E03E00779B02 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		ADECAAC61AD1E03E00779B02 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		ADECAAC71AD1E03E00779B02 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		ADECAAC61AD1E03E00779B02 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		ADECAAC71AD1E03E00779B02 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		ADECAACA1AD1E03E00779B02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ADECAACC1AD1E03E00779B02 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		ADECAACF1AD1E03E00779B02 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		ADECAAD51AD1E03E00779B02 /* howhiamiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = howhiamiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADECAADA1AD1E03E00779B02 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADECAADB1AD1E03E00779B02 /* howhiamiTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = howhiamiTests.m; sourceTree = "<group>"; };
+		ADECAAE51AD1E08900779B02 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -47,6 +72,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADBE010B1AD9B6A00068BBE7 /* libsqlite3.dylib in Frameworks */,
+				ADECAAE61AD1E08900779B02 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -63,6 +90,9 @@
 		ADECAAB31AD1E03E00779B02 = {
 			isa = PBXGroup;
 			children = (
+				ADDFC5131ADEFC3500634087 /* readme.md */,
+				ADBE010A1AD9B6A00068BBE7 /* libsqlite3.dylib */,
+				ADECAAE51AD1E08900779B02 /* CoreLocation.framework */,
 				ADECAABE1AD1E03E00779B02 /* howhiami */,
 				ADECAAD81AD1E03E00779B02 /* howhiamiTests */,
 				ADECAABD1AD1E03E00779B02 /* Products */,
@@ -81,10 +111,20 @@
 		ADECAABE1AD1E03E00779B02 /* howhiami */ = {
 			isa = PBXGroup;
 			children = (
+				AD33D61F1ADDC71B000955F8 /* MenuDrawViewController.h */,
+				AD33D6201ADDC751000955F8 /* MenuDrawViewController.m */,
+				AD33D6221ADDC776000955F8 /* MenuViewController.h */,
+				AD33D6231ADDC7A3000955F8 /* MenuViewController.m */,
+				ADBE010C1AD9B6F50068BBE7 /* DBManager.h */,
+				ADBE010D1AD9B70A0068BBE7 /* DBManager.m */,
+				AD33D61C1ADDC68B000955F8 /* DisplayContentSegue.h */,
+				AD33D61D1ADDC6D2000955F8 /* DisplayContentSegue.m */,
 				ADECAAC31AD1E03E00779B02 /* AppDelegate.h */,
 				ADECAAC41AD1E03E00779B02 /* AppDelegate.m */,
-				ADECAAC61AD1E03E00779B02 /* ViewController.h */,
-				ADECAAC71AD1E03E00779B02 /* ViewController.m */,
+				ADECAAC61AD1E03E00779B02 /* MainViewController.h */,
+				ADECAAC71AD1E03E00779B02 /* MainViewController.m */,
+				ADDFC50C1ADECCFC00634087 /* ButtonHandler.h */,
+				ADDFC50D1ADECD1E00634087 /* ButtonHandler.m */,
 				ADECAAC91AD1E03E00779B02 /* Main.storyboard */,
 				ADECAACC1AD1E03E00779B02 /* Images.xcassets */,
 				ADECAACE1AD1E03E00779B02 /* LaunchScreen.xib */,
@@ -96,6 +136,8 @@
 		ADECAABF1AD1E03E00779B02 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				ADDFC5111ADED49B00634087 /* ic_burger_44.png */,
+				ADB7D96E1ADC4A3F00761587 /* fact_list_20150413.txt */,
 				ADECAAC01AD1E03E00779B02 /* Info.plist */,
 				ADECAAC11AD1E03E00779B02 /* main.m */,
 			);
@@ -168,6 +210,7 @@
 				TargetAttributes = {
 					ADECAABB1AD1E03E00779B02 = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = 6F635Y6QVK;
 					};
 					ADECAAD41AD1E03E00779B02 = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -201,7 +244,9 @@
 			files = (
 				ADECAACB1AD1E03E00779B02 /* Main.storyboard in Resources */,
 				ADECAAD01AD1E03E00779B02 /* LaunchScreen.xib in Resources */,
+				ADB7D96F1ADC4A3F00761587 /* fact_list_20150413.txt in Resources */,
 				ADECAACD1AD1E03E00779B02 /* Images.xcassets in Resources */,
+				ADDFC5121ADED49B00634087 /* ic_burger_44.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -219,9 +264,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADECAAC81AD1E03E00779B02 /* ViewController.m in Sources */,
+				ADECAAC81AD1E03E00779B02 /* MainViewController.m in Sources */,
+				ADDFC5141ADEFC3500634087 /* readme.md in Sources */,
+				AD33D6211ADDC751000955F8 /* MenuDrawViewController.m in Sources */,
+				AD33D61E1ADDC6D2000955F8 /* DisplayContentSegue.m in Sources */,
 				ADECAAC51AD1E03E00779B02 /* AppDelegate.m in Sources */,
+				ADDFC50E1ADECD1E00634087 /* ButtonHandler.m in Sources */,
+				AD33D6241ADDC7A3000955F8 /* MenuViewController.m in Sources */,
 				ADECAAC21AD1E03E00779B02 /* main.m in Sources */,
+				ADBE010E1AD9B70A0068BBE7 /* DBManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +396,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = howhiami/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -355,6 +407,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = howhiami/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -414,6 +467,7 @@
 				ADECAAE11AD1E03E00779B02 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		ADECAAE21AD1E03E00779B02 /* Build configuration list for PBXNativeTarget "howhiamiTests" */ = {
 			isa = XCConfigurationList;
@@ -422,6 +476,7 @@
 				ADECAAE41AD1E03E00779B02 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
