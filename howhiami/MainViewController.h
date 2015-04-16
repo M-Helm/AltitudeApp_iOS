@@ -8,12 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
+#import <CoreMotion/CoreMotion.h>
+
+double hithere;
+
 
 @interface MainViewController : UIViewController <CLLocationManagerDelegate>
 
 @property (nonatomic) CLLocationManager *locationManager;
 
-
 @end
+
+
 
 

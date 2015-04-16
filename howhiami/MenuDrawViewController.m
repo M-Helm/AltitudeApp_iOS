@@ -89,7 +89,6 @@
     [self addChildViewController:_content];
     [_content didMoveToParentViewController:self];
     [self.view addSubview:_content.view];
-    
     [self closeDrawer];
 }
 
