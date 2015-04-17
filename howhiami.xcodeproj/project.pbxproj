@@ -10,13 +10,13 @@
 		AD33D61E1ADDC6D2000955F8 /* DisplayContentSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = AD33D61D1ADDC6D2000955F8 /* DisplayContentSegue.m */; };
 		AD33D6211ADDC751000955F8 /* MenuDrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD33D6201ADDC751000955F8 /* MenuDrawViewController.m */; };
 		AD33D6241ADDC7A3000955F8 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD33D6231ADDC7A3000955F8 /* MenuViewController.m */; };
+		AD5E95711AE1AF0400B247E4 /* LineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5E95701AE1AF0400B247E4 /* LineChart.m */; };
 		AD76FB4E1ADF377300F0B389 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD76FB4D1ADF377300F0B389 /* CoreMotion.framework */; };
 		ADB7D96F1ADC4A3F00761587 /* fact_list_20150413.txt in Resources */ = {isa = PBXBuildFile; fileRef = ADB7D96E1ADC4A3F00761587 /* fact_list_20150413.txt */; };
 		ADBE010B1AD9B6A00068BBE7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBE010A1AD9B6A00068BBE7 /* libsqlite3.dylib */; };
 		ADBE010E1AD9B70A0068BBE7 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ADBE010D1AD9B70A0068BBE7 /* DBManager.m */; };
 		ADDFC50E1ADECD1E00634087 /* ButtonHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = ADDFC50D1ADECD1E00634087 /* ButtonHandler.m */; };
 		ADDFC5121ADED49B00634087 /* ic_burger_44.png in Resources */ = {isa = PBXBuildFile; fileRef = ADDFC5111ADED49B00634087 /* ic_burger_44.png */; };
-		ADDFC5141ADEFC3500634087 /* readme.md in Sources */ = {isa = PBXBuildFile; fileRef = ADDFC5131ADEFC3500634087 /* readme.md */; };
 		ADECAAC21AD1E03E00779B02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ADECAAC11AD1E03E00779B02 /* main.m */; };
 		ADECAAC51AD1E03E00779B02 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = ADECAAC41AD1E03E00779B02 /* AppDelegate.m */; };
 		ADECAAC81AD1E03E00779B02 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ADECAAC71AD1E03E00779B02 /* MainViewController.m */; };
@@ -44,6 +44,8 @@
 		AD33D6201ADDC751000955F8 /* MenuDrawViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuDrawViewController.m; sourceTree = "<group>"; };
 		AD33D6221ADDC776000955F8 /* MenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		AD33D6231ADDC7A3000955F8 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		AD5E95701AE1AF0400B247E4 /* LineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineChart.m; sourceTree = "<group>"; };
+		AD5E95721AE1AF1800B247E4 /* LineChart.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LineChart.h; sourceTree = "<group>"; };
 		AD76FB4D1ADF377300F0B389 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		ADB7D96E1ADC4A3F00761587 /* fact_list_20150413.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fact_list_20150413.txt; sourceTree = "<group>"; };
 		ADBE010A1AD9B6A00068BBE7 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
@@ -115,6 +117,8 @@
 		ADECAABE1AD1E03E00779B02 /* howhiami */ = {
 			isa = PBXGroup;
 			children = (
+				AD5E95721AE1AF1800B247E4 /* LineChart.h */,
+				AD5E95701AE1AF0400B247E4 /* LineChart.m */,
 				AD33D61F1ADDC71B000955F8 /* MenuDrawViewController.h */,
 				AD33D6201ADDC751000955F8 /* MenuDrawViewController.m */,
 				AD33D6221ADDC776000955F8 /* MenuViewController.h */,
@@ -269,8 +273,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADECAAC81AD1E03E00779B02 /* MainViewController.m in Sources */,
-				ADDFC5141ADEFC3500634087 /* readme.md in Sources */,
 				AD33D6211ADDC751000955F8 /* MenuDrawViewController.m in Sources */,
+				AD5E95711AE1AF0400B247E4 /* LineChart.m in Sources */,
 				AD33D61E1ADDC6D2000955F8 /* DisplayContentSegue.m in Sources */,
 				ADECAAC51AD1E03E00779B02 /* AppDelegate.m in Sources */,
 				ADDFC50E1ADECD1E00634087 /* ButtonHandler.m in Sources */,

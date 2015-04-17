@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "DBManager.h"
+#import "LineChart.h"
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
 
@@ -68,6 +69,7 @@ NSString *fact;
 
     //[dbManager dropTable:@"facts"];
     [dbManager getInitFacts];
+    
 }
 - (void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
@@ -174,7 +176,9 @@ NSString *fact;
     utilView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     utilView.layer.borderWidth = 3;
     utilView.layer.cornerRadius = 15;
-    compassView.layer.masksToBounds = YES;
+    utilView.layer.masksToBounds = YES;
+    [utilView addSubview:[self chart1]];
+    
     [self.view addSubview:utilView];
     
     [self updateLabels:true];
@@ -209,13 +213,13 @@ NSString *fact;
 // Location Manager Delegate Methods
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    NSLog(@"%@, count: %i", [locations lastObject], [locations count]);
+    //NSLog(@"%@, count: %i", [locations lastObject], [locations count]);
     if([fact length] < 10){
         [self updateLabels:true];
         return;
     }
     if([locations count] > 1){
-        int i = [locations count] - 1;
+        int i = (int)[locations count] - 1;
         CLLocation *lstLoc = locations[i];
         currentLoc = [locations lastObject];
         double d = lstLoc.altitude - currentLoc.altitude;
@@ -237,6 +241,33 @@ NSString *fact;
     currentHeading = &theHeading;
     compassLabel.text = [NSString stringWithFormat:@"%i", (int)newHeading.magneticHeading];
     //[self updateHeadingDisplays];
+}
+
+-(LineChart*)chart1 {
+    // Generating some dummy data
+    NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:10];
+    
+    for(int i=0;i<10;i++) {
+        int r = (rand() + rand()) % 1000;
+        chartData[i] = [NSNumber numberWithInt:r + 200];
+    }
+    //nitWithFrame:CGRectMake(10, 375, xCo-120, 140)];
+    
+    // Creating the line chart
+    LineChart* lineChart = [[LineChart alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width - 120, 140)];
+    lineChart.verticalGridStep = 5;
+    lineChart.horizontalGridStep = 9;
+    
+    lineChart.labelForIndex = ^(NSUInteger item) {
+        return [NSString stringWithFormat:@"%lu",(unsigned long)item];
+    };
+    
+    lineChart.labelForValue = ^(CGFloat value) {
+        return [NSString stringWithFormat:@"%.f", value];
+    };
+    
+    [lineChart setChartData:chartData];
+    return lineChart;
 }
 
 
