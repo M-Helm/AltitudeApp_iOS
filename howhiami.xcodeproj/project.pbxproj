@@ -15,6 +15,7 @@
 		ADB7D96F1ADC4A3F00761587 /* fact_list_20150413.txt in Resources */ = {isa = PBXBuildFile; fileRef = ADB7D96E1ADC4A3F00761587 /* fact_list_20150413.txt */; };
 		ADBE010B1AD9B6A00068BBE7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBE010A1AD9B6A00068BBE7 /* libsqlite3.dylib */; };
 		ADBE010E1AD9B70A0068BBE7 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ADBE010D1AD9B70A0068BBE7 /* DBManager.m */; };
+		ADC788391AE2B52900EFFB9D /* ApplicationGlobals.m in Sources */ = {isa = PBXBuildFile; fileRef = ADC788381AE2B52900EFFB9D /* ApplicationGlobals.m */; };
 		ADDFC50E1ADECD1E00634087 /* ButtonHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = ADDFC50D1ADECD1E00634087 /* ButtonHandler.m */; };
 		ADDFC5121ADED49B00634087 /* ic_burger_44.png in Resources */ = {isa = PBXBuildFile; fileRef = ADDFC5111ADED49B00634087 /* ic_burger_44.png */; };
 		ADECAAC21AD1E03E00779B02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ADECAAC11AD1E03E00779B02 /* main.m */; };
@@ -51,6 +52,8 @@
 		ADBE010A1AD9B6A00068BBE7 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		ADBE010C1AD9B6F50068BBE7 /* DBManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
 		ADBE010D1AD9B70A0068BBE7 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
+		ADC788371AE2B51500EFFB9D /* ApplicationGlobals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplicationGlobals.h; sourceTree = "<group>"; };
+		ADC788381AE2B52900EFFB9D /* ApplicationGlobals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationGlobals.m; sourceTree = "<group>"; };
 		ADDFC50C1ADECCFC00634087 /* ButtonHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonHandler.h; sourceTree = "<group>"; };
 		ADDFC50D1ADECD1E00634087 /* ButtonHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonHandler.m; sourceTree = "<group>"; };
 		ADDFC5111ADED49B00634087 /* ic_burger_44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_burger_44.png; path = ../../../Timbr/singlebeards/Timber/ic_burger_44.png; sourceTree = "<group>"; };
@@ -117,6 +120,8 @@
 		ADECAABE1AD1E03E00779B02 /* howhiami */ = {
 			isa = PBXGroup;
 			children = (
+				ADC788371AE2B51500EFFB9D /* ApplicationGlobals.h */,
+				ADC788381AE2B52900EFFB9D /* ApplicationGlobals.m */,
 				AD5E95721AE1AF1800B247E4 /* LineChart.h */,
 				AD5E95701AE1AF0400B247E4 /* LineChart.m */,
 				AD33D61F1ADDC71B000955F8 /* MenuDrawViewController.h */,
@@ -279,6 +284,7 @@
 				ADECAAC51AD1E03E00779B02 /* AppDelegate.m in Sources */,
 				ADDFC50E1ADECD1E00634087 /* ButtonHandler.m in Sources */,
 				AD33D6241ADDC7A3000955F8 /* MenuViewController.m in Sources */,
+				ADC788391AE2B52900EFFB9D /* ApplicationGlobals.m in Sources */,
 				ADECAAC21AD1E03E00779B02 /* main.m in Sources */,
 				ADBE010E1AD9B70A0068BBE7 /* DBManager.m in Sources */,
 			);

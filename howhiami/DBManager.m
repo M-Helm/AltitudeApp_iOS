@@ -12,21 +12,21 @@
 
 @end
 
-static DBManager *sharedInstance = nil;
+static DBManager *sharedDBManager = nil;
 static sqlite3 *database = nil;
 static sqlite3_stmt *statement = nil;
 
 @implementation DBManager
 
-+(DBManager*)getSharedInstance{
-    if (!sharedInstance) {
-        sharedInstance = [[super allocWithZone:NULL]init];
-        [sharedInstance createFactsTable];
++(DBManager*)getSharedDBManager{
+    if (!sharedDBManager) {
+        sharedDBManager = [[super allocWithZone:NULL]init];
+        [sharedDBManager createFactsTable];
     }
-    return sharedInstance;
+    return sharedDBManager;
 }
 -(NSArray*)getInitFacts{
-    NSLog(@"pop Table");
+    //NSLog(@"pop Table");
     [self createFactsTable];
     NSString *path = [[NSBundle mainBundle] bundlePath];
     NSString *filePath = [path stringByAppendingPathComponent:@"fact_list_20150413.txt"];
@@ -37,7 +37,7 @@ static sqlite3_stmt *statement = nil;
     
     NSError *e = nil;
     NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData: jsonData options: NSJSONReadingMutableContainers error: &e];
-    NSLog(@"count %i", (int)[jsonArray count]);
+    //NSLog(@"count %i", (int)[jsonArray count]);
     //check if data exists in table and return the array w/o saving if so.
     if([self getFactTableRowsCount] > 1)return jsonArray;
     //NSTimeInterval timeInterval = [[NSDate date] timeIntervalSince1970];
@@ -46,9 +46,9 @@ static sqlite3_stmt *statement = nil;
     while (i < [jsonArray count]){
         NSMutableDictionary *json = [jsonArray objectAtIndex:i];
         json[@"timestamp"] = @0;
-        NSLog(@"json: %@ %@ %@", [json objectForKey:@"alt"],
-                                 [json objectForKey:@"timestamp"],
-                                 [json objectForKey:@"msg"]);
+        //NSLog(@"json: %@ %@ %@", [json objectForKey:@"alt"],
+        //                         [json objectForKey:@"timestamp"],
+        //                         [json objectForKey:@"msg"]);
         [self saveFact:json];
         i++;
     }
@@ -120,7 +120,7 @@ static sqlite3_stmt *statement = nil;
 }
 
 - (BOOL) checkFactTableExists{
-    NSLog(@"check Table called");
+    //NSLog(@"check Table called");
     const char *dbpath = [databasePath UTF8String];
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
@@ -182,7 +182,7 @@ static sqlite3_stmt *statement = nil;
     {
         NSString *querySQL = [NSString stringWithFormat:@"SELECT * FROM facts WHERE altitude BETWEEN %i and %i ORDER BY RANDOM() LIMIT 1", altBoundLo, altBoundHi];
         //NSString *querySQL = [NSString stringWithFormat:@"SELECT altitude FROM facts"];
-        NSLog(@"%@", querySQL);
+        //NSLog(@"%@", querySQL);
         const char *query_stmt = [querySQL UTF8String];
         
         if (sqlite3_prepare_v2(database, query_stmt, -1, &statement, NULL) == SQLITE_OK)
@@ -197,7 +197,7 @@ static sqlite3_stmt *statement = nil;
         sqlite3_finalize(statement);
         sqlite3_close(database);
     }
-    NSLog(@"... %@", fact);
+    //NSLog(@"... %@", fact);
     return fact;
 }
 -(BOOL) dropTable:(NSString*)table{

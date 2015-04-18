@@ -14,7 +14,7 @@
     NSString *databasePath;
 }
 
-+ (DBManager*)getSharedInstance;
++ (DBManager*)getSharedDBManager;
 - (NSArray*)getInitFacts;
 - (BOOL) checkFactTableExists;
 - (int) getFactTableRowsCount;

@@ -16,6 +16,11 @@ double hithere;
 @interface MainViewController : UIViewController <CLLocationManagerDelegate>
 
 @property (nonatomic) CLLocationManager *locationManager;
+@property (nonatomic) NSString *firstUnitLabel;
+@property (nonatomic) NSString *secondUnitLabel;
+@property (nonatomic) CLLocation *currentLocation;
+@property (nonatomic) CLLocationDirection *currentHeading;
+@property (strong, retain) UIView *utilView;
 
 @end
 

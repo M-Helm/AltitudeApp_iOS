@@ -503,7 +503,9 @@
 - (UIBezierPath*)getLinePath:(float)scale withSmoothing:(BOOL)smoothed close:(BOOL)closed
 {
     UIBezierPath* path = [UIBezierPath bezierPath];
-    
+    if(self.data.count < 2){
+        return path;
+    }
     if(smoothed) {
         for(int i=0;i<_data.count - 1;i++) {
             CGPoint controlPoint[2];
