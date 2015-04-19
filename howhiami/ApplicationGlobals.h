@@ -10,7 +10,6 @@
 
 @interface ApplicationGlobals : NSObject
 
-@property (nonatomic, retain) NSMutableArray *altitudeArray;
 
 + (id)sharedAppGlobals;
 

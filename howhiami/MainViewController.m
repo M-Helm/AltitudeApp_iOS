@@ -10,6 +10,7 @@
 #import "DBManager.h"
 #import "ApplicationGlobals.h"
 #import "LineChart.h"
+#import "AltitudeQueue.h"
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
 
@@ -21,7 +22,7 @@
 
 DBManager *dbManager;
 ApplicationGlobals *appGlobals;
-
+AltitudeQueue *altQueue;
 
 UIView *altView;
 UIView *barometerView;
@@ -45,6 +46,7 @@ UIActivityIndicatorView *spinner;
     self.locationManager = [[CLLocationManager alloc] init];
     dbManager = [DBManager getSharedDBManager];
     appGlobals = [ApplicationGlobals sharedAppGlobals];
+    altQueue = [[AltitudeQueue alloc] init];
     self.currentLocation = [[CLLocation alloc] init];
     
     self.locationManager.delegate  = self;
@@ -130,7 +132,6 @@ UIActivityIndicatorView *spinner;
     
 
     
-    
     [compassLabel addSubview:compassTitle];
     [compassView addSubview:compassLabel];
     [self.view addSubview:compassView];
@@ -191,17 +192,14 @@ UIActivityIndicatorView *spinner;
 {
     NSLog(@"locations array count: %i",(int)[locations count]);
     self.currentLocation = [locations lastObject];
-    //[self.view removeFromSuperview:utilView];
-    
     //int r = (rand() + rand()) % 1000;
-    
     
     int a = (int)self.currentLocation.altitude;
     NSNumber* aWrapped = [NSNumber numberWithInt:a];
-    [appGlobals.altitudeArray addObject:aWrapped];
+    [altQueue enqueue:aWrapped];
     [self.chart1 clearChartData];
-    [self.chart1 setChartData:appGlobals.altitudeArray];
-    
+    [self.chart1 setChartData:altQueue];
+
     [utilView addSubview:[self chart1]];
     
     [self.view addSubview:utilView];
@@ -263,7 +261,7 @@ UIActivityIndicatorView *spinner;
 
 -(LineChart*)chart1 {
     //NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:10];
-    NSMutableArray* chartData = appGlobals.altitudeArray;
+    NSMutableArray* chartData = altQueue;
     NSLog(@"alt Array count:%i",(int)[chartData count]);
     //for(int i=0;i<10;i++) {
     //    int r = (rand() + rand()) % 1000;

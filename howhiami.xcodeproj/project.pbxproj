@@ -16,6 +16,7 @@
 		ADBE010B1AD9B6A00068BBE7 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBE010A1AD9B6A00068BBE7 /* libsqlite3.dylib */; };
 		ADBE010E1AD9B70A0068BBE7 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = ADBE010D1AD9B70A0068BBE7 /* DBManager.m */; };
 		ADC788391AE2B52900EFFB9D /* ApplicationGlobals.m in Sources */ = {isa = PBXBuildFile; fileRef = ADC788381AE2B52900EFFB9D /* ApplicationGlobals.m */; };
+		ADCB6C921AE3FE6A00BD0360 /* AltitudeQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = ADCB6C911AE3FE6A00BD0360 /* AltitudeQueue.m */; };
 		ADDFC50E1ADECD1E00634087 /* ButtonHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = ADDFC50D1ADECD1E00634087 /* ButtonHandler.m */; };
 		ADDFC5121ADED49B00634087 /* ic_burger_44.png in Resources */ = {isa = PBXBuildFile; fileRef = ADDFC5111ADED49B00634087 /* ic_burger_44.png */; };
 		ADECAAC21AD1E03E00779B02 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = ADECAAC11AD1E03E00779B02 /* main.m */; };
@@ -54,6 +55,8 @@
 		ADBE010D1AD9B70A0068BBE7 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
 		ADC788371AE2B51500EFFB9D /* ApplicationGlobals.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApplicationGlobals.h; sourceTree = "<group>"; };
 		ADC788381AE2B52900EFFB9D /* ApplicationGlobals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationGlobals.m; sourceTree = "<group>"; };
+		ADCB6C911AE3FE6A00BD0360 /* AltitudeQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AltitudeQueue.m; sourceTree = "<group>"; };
+		ADCB6C941AE3FE8200BD0360 /* AltitudeQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AltitudeQueue.h; sourceTree = "<group>"; };
 		ADDFC50C1ADECCFC00634087 /* ButtonHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonHandler.h; sourceTree = "<group>"; };
 		ADDFC50D1ADECD1E00634087 /* ButtonHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ButtonHandler.m; sourceTree = "<group>"; };
 		ADDFC5111ADED49B00634087 /* ic_burger_44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ic_burger_44.png; path = ../../../Timbr/singlebeards/Timber/ic_burger_44.png; sourceTree = "<group>"; };
@@ -120,6 +123,8 @@
 		ADECAABE1AD1E03E00779B02 /* howhiami */ = {
 			isa = PBXGroup;
 			children = (
+				ADCB6C941AE3FE8200BD0360 /* AltitudeQueue.h */,
+				ADCB6C911AE3FE6A00BD0360 /* AltitudeQueue.m */,
 				ADC788371AE2B51500EFFB9D /* ApplicationGlobals.h */,
 				ADC788381AE2B52900EFFB9D /* ApplicationGlobals.m */,
 				AD5E95721AE1AF1800B247E4 /* LineChart.h */,
@@ -278,6 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADECAAC81AD1E03E00779B02 /* MainViewController.m in Sources */,
+				ADCB6C921AE3FE6A00BD0360 /* AltitudeQueue.m in Sources */,
 				AD33D6211ADDC751000955F8 /* MenuDrawViewController.m in Sources */,
 				AD5E95711AE1AF0400B247E4 /* LineChart.m in Sources */,
 				AD33D61E1ADDC6D2000955F8 /* DisplayContentSegue.m in Sources */,

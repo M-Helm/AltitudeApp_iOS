@@ -60,16 +60,16 @@
     _axisHeight = self.frame.size.height - 2 * _margin;
     _axisColor = [UIColor colorWithWhite:0.7 alpha:1.0];
     _innerGridColor = [UIColor colorWithWhite:0.9 alpha:1.0];
-    _drawInnerGrid = YES;
-    _bezierSmoothing = YES;
+    _drawInnerGrid = NO;
+    _bezierSmoothing = NO;
     _bezierSmoothingTension = 0.2;
     _lineWidth = 1;
     _innerGridLineWidth = 0.5;
     _axisLineWidth = 1;
-    _animationDuration = 0.5;
-    _displayDataPoint = NO;
+    _animationDuration = 0.0;
+    _displayDataPoint = YES;
     _dataPointRadius = 1;
-    _dataPointColor = _color;
+    _dataPointColor = [UIColor redColor];
     _dataPointBackgroundColor = _color;
     
     // Labels attributes
@@ -405,6 +405,8 @@
         if([number floatValue] > _max)
             _max = [number floatValue];
     }
+    //_min = 1000;
+    //_max = 2000;
     
     // The idea is to adjust the minimun and the maximum value to display the whole chart in the view, and if possible with nice "round" steps.
     _max = [self getUpperRoundNumber:_max forGridStep:_verticalGridStep];
