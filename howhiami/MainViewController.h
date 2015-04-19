@@ -20,7 +20,6 @@ double hithere;
 @property (nonatomic) NSString *secondUnitLabel;
 @property (nonatomic) CLLocation *currentLocation;
 @property (nonatomic) CLLocationDirection *currentHeading;
-@property (strong, retain) UIView *utilView;
 
 @end
 
