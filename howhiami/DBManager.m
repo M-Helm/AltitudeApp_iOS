@@ -22,6 +22,7 @@ static sqlite3_stmt *statement = nil;
     if (!sharedDBManager) {
         sharedDBManager = [[super allocWithZone:NULL]init];
         [sharedDBManager createFactsTable];
+        NSLog(@"%s", __PRETTY_FUNCTION__);
     }
     return sharedDBManager;
 }
@@ -33,7 +34,7 @@ static sqlite3_stmt *statement = nil;
     NSString *contentStr = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
 
     NSData *jsonData = [contentStr dataUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"%i",(int)[jsonData length]);
+    //NSLog(@"%i",(int)[jsonData length]);
     
     NSError *e = nil;
     NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData: jsonData options: NSJSONReadingMutableContainers error: &e];
@@ -57,7 +58,7 @@ static sqlite3_stmt *statement = nil;
 
 
 -(BOOL)createFactsTable{
-    NSLog(@"create facts table called");
+    //NSLog(@"create facts table called");
     NSString *docsDir;
     NSArray *dirPaths;
     // Get the documents directory
@@ -175,7 +176,7 @@ static sqlite3_stmt *statement = nil;
 - (NSString *) getFact:(int) alt{
     int altBoundLo = alt - 51;
     int altBoundHi = alt + 51;
-    NSLog(@"getFact called %i %i", altBoundLo, altBoundHi);
+    //NSLog(@"getFact called %i %i", altBoundLo, altBoundHi);
     NSString *fact = @"Database error";
     const char *dbpath = [databasePath UTF8String];
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)

@@ -8,7 +8,7 @@
 
 #import <foundation/Foundation.h>
 
-@interface AltitudeQueue: NSMutableArray
+@interface NSMutableArray (AltitudeQueue)
 //@property (nonatomic) NSMutableArray *altitudeQueue;
 - (id) dequeue;
 - (void) enqueue:(id)obj;

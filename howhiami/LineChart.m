@@ -60,7 +60,7 @@
     _axisHeight = self.frame.size.height - 2 * _margin;
     _axisColor = [UIColor colorWithWhite:0.7 alpha:1.0];
     _innerGridColor = [UIColor colorWithWhite:0.9 alpha:1.0];
-    _drawInnerGrid = NO;
+    _drawInnerGrid = YES;
     _bezierSmoothing = NO;
     _bezierSmoothingTension = 0.2;
     _lineWidth = 1;
@@ -378,7 +378,6 @@
     if(_data.count > 1) {
         scale = (CGFloat)(q * _horizontalGridStep) / (CGFloat)(_data.count - 1);
     }
-    
     return scale;
 }
 
@@ -394,6 +393,9 @@
 
 - (void)computeBounds
 {
+    
+    //_min = 1500;
+    //_max = 2000;
     _min = MAXFLOAT;
     _max = -MAXFLOAT;
     
@@ -405,11 +407,11 @@
         if([number floatValue] > _max)
             _max = [number floatValue];
     }
-    //_min = 1000;
-    //_max = 2000;
     
     // The idea is to adjust the minimun and the maximum value to display the whole chart in the view, and if possible with nice "round" steps.
     _max = [self getUpperRoundNumber:_max forGridStep:_verticalGridStep];
+    
+    
     
     if(_min < 0) {
         // If the minimum is negative then we want to have one of the step to be zero so that the chart is displayed nicely and more comprehensively
@@ -458,6 +460,7 @@
         }
         
     }
+    
 }
 
 #pragma mark - Chart utils
@@ -468,17 +471,24 @@
         return 0;
     
     // We consider a round number the following by 0.5 step instead of true round number (with step of 1)
+    //CGFloat logValue = log10f(value);
     CGFloat logValue = log10f(value);
     CGFloat scale = powf(10, floorf(logValue));
+    //CGFloat scale = 500;
     CGFloat n = ceilf(value / scale * 4);
+    
+    NSLog(@"logValue: %f, scale: %f, n: %f", logValue, scale, n);
     
     int tmp = (int)(n) % gridStep;
     
     if(tmp != 0) {
         n += gridStep - tmp;
     }
+    CGFloat temp = n * scale / 4.0f;
+    NSLog(@"temp: %f, n: %f, scale: %f, gridstep: %i", temp, n, scale, gridStep);
     
     return n * scale / 4.0f;
+    //return value+250;
 }
 
 - (void)setGridStep:(int)gridStep

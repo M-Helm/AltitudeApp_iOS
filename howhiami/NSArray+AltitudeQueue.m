@@ -6,9 +6,9 @@
 //  Copyright (c) 2015 Matthew Helm. All rights reserved.
 //
 
-#import "AltitudeQueue.h"
+#import "NSArray+AltitudeQueue.h"
 
-@implementation AltitudeQueue
+@implementation NSMutableArray (AltitudeQueue)
 
 - (id) dequeue {
     if ([self count] < 1) return nil;

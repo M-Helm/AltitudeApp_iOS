@@ -10,7 +10,7 @@
 #import "DBManager.h"
 #import "ApplicationGlobals.h"
 #import "LineChart.h"
-#import "AltitudeQueue.h"
+#import "NSArray+AltitudeQueue.h"
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
 
@@ -22,7 +22,8 @@
 
 DBManager *dbManager;
 ApplicationGlobals *appGlobals;
-AltitudeQueue *altQueue;
+NSMutableArray *altQueue;
+
 
 UIView *altView;
 UIView *barometerView;
@@ -46,8 +47,9 @@ UIActivityIndicatorView *spinner;
     self.locationManager = [[CLLocationManager alloc] init];
     dbManager = [DBManager getSharedDBManager];
     appGlobals = [ApplicationGlobals sharedAppGlobals];
-    altQueue = [[AltitudeQueue alloc] init];
+    altQueue = [[NSMutableArray alloc] init];
     self.currentLocation = [[CLLocation alloc] init];
+
     
     self.locationManager.delegate  = self;
     self.locationManager.distanceFilter = 10.0f;
@@ -130,8 +132,6 @@ UIActivityIndicatorView *spinner;
     compassTitle.font = [UIFont systemFontOfSize:11];
     compassTitle.text = @"Heading";
     
-
-    
     [compassLabel addSubview:compassTitle];
     [compassView addSubview:compassLabel];
     [self.view addSubview:compassView];
@@ -190,21 +190,9 @@ UIActivityIndicatorView *spinner;
 // Location Manager Delegate Methods
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
-    NSLog(@"locations array count: %i",(int)[locations count]);
-    self.currentLocation = [locations lastObject];
-    //int r = (rand() + rand()) % 1000;
-    
-    int a = (int)self.currentLocation.altitude;
-    NSNumber* aWrapped = [NSNumber numberWithInt:a];
-    [altQueue enqueue:aWrapped];
-    [self.chart1 clearChartData];
-    [self.chart1 setChartData:altQueue];
+    //NSLog(@"locations array count: %i",(int)[locations count]);
 
-    [utilView addSubview:[self chart1]];
     
-    [self.view addSubview:utilView];
-    
-    /*
     //Make sure a fact is showing
     if([fact length] < 10){
         [self updateLabels:true];
@@ -216,30 +204,32 @@ UIActivityIndicatorView *spinner;
         CLLocation *lstLoc = locations[i];
         self.currentLocation = [locations lastObject];
         double d = lstLoc.altitude - self.currentLocation.altitude;
-        if(d > 9){
-            int a = (int)self.currentLocation.altitude;
-            NSNumber* aWrapped = [NSNumber numberWithInt:a];
-            [appGlobals.altitudeArray addObject:aWrapped];
-            [self updateLabels:true];
-            [self.chart1 clearChartData];
-            [self.chart1 setChartData:appGlobals.altitudeArray];
-            [utilView addSubview:self.chart1];
+        if(d < 0){
+            d = d * -1;
         }
-        if(d < -9){
-            int a = (int)self.currentLocation.altitude;
-            NSNumber* aWrapped = [NSNumber numberWithInt:a];
-            [appGlobals.altitudeArray addObject:aWrapped];
+        if(d > 9){
+            [self updateGraph];
             [self updateLabels:true];
-            [self.chart1 clearChartData];
-            [self.chart1 setChartData:appGlobals.altitudeArray];
-            [utilView removeFromSuperview];
-            [utilView addSubview:self.chart1];
+            return;
         }
         [self updateLabels:false];
         return;
     }
-    */
+    [self updateGraph];
     [self updateLabels:true];
+}
+- (void)updateGraph{
+    int a = (int)self.currentLocation.altitude;
+    //NSTimeInterval timeInterval = [[NSDate date] timeIntervalSince1970];
+    //int timestamp = (int)timeInterval;
+    
+    NSNumber* aWrapped = [NSNumber numberWithInt:a];
+    [altQueue enqueue:aWrapped];
+    [self.chart1 clearChartData];
+    [self.chart1 setChartData:altQueue];
+    [utilView addSubview:[self chart1]];
+    [self.view addSubview:utilView];
+    [self.view addSubview:utilView];
 }
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading {
     if (newHeading.headingAccuracy < 0){
@@ -260,13 +250,14 @@ UIActivityIndicatorView *spinner;
 }
 
 -(LineChart*)chart1 {
-    //NSMutableArray* chartData = [NSMutableArray arrayWithCapacity:10];
-    NSMutableArray* chartData = altQueue;
-    NSLog(@"alt Array count:%i",(int)[chartData count]);
-    //for(int i=0;i<10;i++) {
-    //    int r = (rand() + rand()) % 1000;
-    //    chartData[i] = [NSNumber numberWithInt:r + 200];
-    //}
+    NSMutableArray *chartData = altQueue;
+    /*
+    NSMutableArray *chartData = [[NSMutableArray alloc] init];
+    for(int i=0;i<10;i++) {
+        int r = (rand() + rand()) % 100;
+        chartData[i] = [NSNumber numberWithInt:0 + r];
+    }
+    */
     LineChart* lineChart = [[LineChart alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width - 120, 140)];
     lineChart.verticalGridStep = 5;
     lineChart.horizontalGridStep = 9;
