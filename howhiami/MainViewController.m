@@ -219,16 +219,22 @@ UIActivityIndicatorView *spinner;
     [self updateLabels:true];
 }
 - (void)updateGraph{
-    int a = (int)self.currentLocation.altitude;
-    //NSTimeInterval timeInterval = [[NSDate date] timeIntervalSince1970];
-    //int timestamp = (int)timeInterval;
+    NSNumber *altitude = [NSNumber numberWithInt:(int)self.currentLocation.altitude];
+    //NSNumber *altitude = [NSNumber numberWithInt:50];
+    NSLog(@"alt: %@", altitude);
+    NSTimeInterval timeInterval = [[NSDate date] timeIntervalSince1970];
+    NSNumber *timestamp = [NSNumber numberWithInt:(int)timeInterval];
+    //NSNumber *timestamp = [NSNumber numberWithInt:23];
+    NSLog(@"time: %@", timestamp);
+    NSMutableDictionary *point = [[NSMutableDictionary alloc] init];
+    [point setObject:timestamp forKey:@"timestamp"];
+    [point setObject:altitude forKey:@"altitude"];
+    [altQueue enqueue:point];
     
-    NSNumber* aWrapped = [NSNumber numberWithInt:a];
-    [altQueue enqueue:aWrapped];
+    
     [self.chart1 clearChartData];
-    [self.chart1 setChartData:altQueue];
+    //[self.chart1 setChartData:altQueue];
     [utilView addSubview:[self chart1]];
-    [self.view addSubview:utilView];
     [self.view addSubview:utilView];
 }
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading {
@@ -250,12 +256,20 @@ UIActivityIndicatorView *spinner;
 }
 
 -(LineChart*)chart1 {
-    NSMutableArray *chartData = altQueue;
-    /*
+    //NSMutableArray *chartData = altQueue;
     NSMutableArray *chartData = [[NSMutableArray alloc] init];
+    for(int i=0;i<altQueue.count;i++) {
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+        dict = altQueue[i];
+        NSNumber *altitude = [dict valueForKey:@"altitude"];
+        NSLog(@"ChartData Item: %@", altitude);
+        [chartData addObject:altitude];
+    }
+    
+    /*
     for(int i=0;i<10;i++) {
         int r = (rand() + rand()) % 100;
-        chartData[i] = [NSNumber numberWithInt:0 + r];
+        chartData[i] = [NSNumber numberWithInt:1600 + r];
     }
     */
     LineChart* lineChart = [[LineChart alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width - 120, 140)];
