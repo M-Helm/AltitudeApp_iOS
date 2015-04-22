@@ -149,7 +149,6 @@
                                      options:NSStringDrawingUsesLineFragmentOrigin
                                   attributes:@{ NSFontAttributeName:_valueLabelFont }
                                      context:nil].size.width;
-    
     CGFloat xPadding = 6;
     CGFloat xOffset = width + xPadding;
     
@@ -383,7 +382,8 @@
 
 - (CGFloat)minVerticalBound
 {
-    return MIN(_min, 0);
+    return _max - 400;
+    //return MIN(_min, 0);
 }
 
 - (CGFloat)maxVerticalBound
@@ -393,10 +393,10 @@
 
 - (void)computeBounds
 {
-    
+
     _min = MAXFLOAT;
     _max = -MAXFLOAT;
-    
+
     for(int i=0;i<_data.count;i++) {
         NSNumber* number = _data[i];
         if([number floatValue] < _min)
@@ -405,7 +405,9 @@
         if([number floatValue] > _max)
             _max = [number floatValue];
     }
-    
+    _max += 200;
+    _min = _max - 400;
+    /*
     // The idea is to adjust the minimun and the maximum value to display the whole chart in the view, and if possible with nice "round" steps.
     _max = [self getUpperRoundNumber:_max forGridStep:_verticalGridStep];
     
@@ -456,7 +458,7 @@
         }
         
     }
-    
+   */
 }
 
 #pragma mark - Chart utils
