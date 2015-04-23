@@ -20,6 +20,7 @@ double hithere;
 @property (nonatomic) NSString *secondUnitLabel;
 @property (nonatomic) CLLocation *currentLocation;
 @property (nonatomic) CLLocationDirection *currentHeading;
+@property (nonatomic) int lastTimestamp;
 
 @end
 

@@ -49,7 +49,7 @@ UIActivityIndicatorView *spinner;
     appGlobals = [ApplicationGlobals sharedAppGlobals];
     altQueue = [[NSMutableArray alloc] init];
     self.currentLocation = [[CLLocation alloc] init];
-
+    self.lastTimestamp = 0;
     
     self.locationManager.delegate  = self;
     self.locationManager.distanceFilter = 10.0f;
@@ -192,7 +192,6 @@ UIActivityIndicatorView *spinner;
 {
     //NSLog(@"locations array count: %i",(int)[locations count]);
 
-    
     //Make sure a fact is showing
     if([fact length] < 10){
         [self updateLabels:true];
@@ -208,6 +207,7 @@ UIActivityIndicatorView *spinner;
             d = d * -1;
         }
         if(d > 9){
+            [self addAltitudePoint];
             [self updateGraph];
             [self updateLabels:true];
             return;
@@ -215,23 +215,27 @@ UIActivityIndicatorView *spinner;
         [self updateLabels:false];
         return;
     }
+    [self addAltitudePoint];
     [self updateGraph];
     [self updateLabels:true];
 }
-- (void)updateGraph{
+- (void)addAltitudePoint{
     NSNumber *altitude = [NSNumber numberWithInt:(int)self.currentLocation.altitude];
     //NSNumber *altitude = [NSNumber numberWithInt:50];
     NSLog(@"alt: %@", altitude);
     NSTimeInterval timeInterval = [[NSDate date] timeIntervalSince1970];
-    NSNumber *timestamp = [NSNumber numberWithInt:(int)timeInterval];
-    //NSNumber *timestamp = [NSNumber numberWithInt:23];
-    NSLog(@"time: %@", timestamp);
-    NSMutableDictionary *point = [[NSMutableDictionary alloc] init];
-    [point setObject:timestamp forKey:@"timestamp"];
-    [point setObject:altitude forKey:@"altitude"];
-    [altQueue enqueue:point];
-    
-    
+    NSNumber *timeStamp = [NSNumber numberWithInt:(int)timeInterval];
+    if((int)timeStamp - _lastTimestamp > 150){
+        _lastTimestamp = (int)timeStamp;
+        NSLog(@"time: %@", timeStamp);
+        NSMutableDictionary *point = [[NSMutableDictionary alloc] init];
+        [point setObject:timeStamp forKey:@"timestamp"];
+        [point setObject:altitude forKey:@"altitude"];
+        [altQueue enqueue:point];
+    }
+}
+
+- (void)updateGraph{
     [self.chart1 clearChartData];
     //[self.chart1 setChartData:altQueue];
     [utilView addSubview:[self chart1]];
@@ -308,3 +312,5 @@ UIActivityIndicatorView *spinner;
 
 
 @end
+
+
