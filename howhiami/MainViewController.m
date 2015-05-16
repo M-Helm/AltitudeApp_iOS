@@ -39,7 +39,8 @@ UILabel *acclLabel;
 UILabel *utilLabel;
 
 NSString *fact;
-UIActivityIndicatorView *spinner;
+UIActivityIndicatorView *altSpinner;
+UIActivityIndicatorView *barometerSpinner;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -111,7 +112,7 @@ UIActivityIndicatorView *spinner;
     barometerView.layer.masksToBounds = YES;
     barometerLabel.textAlignment = NSTextAlignmentCenter;
     barometerLabel.font = [UIFont systemFontOfSize:25];
-    barometerLabel.text = @"NA";
+    //barometerLabel.text = @"NA";
     UILabel *barometerTitle = [[UILabel alloc] initWithFrame:CGRectMake(2,2,76,15)];
     barometerTitle.textAlignment = NSTextAlignmentCenter;
     barometerTitle.font = [UIFont systemFontOfSize:11];
@@ -218,6 +219,7 @@ UIActivityIndicatorView *spinner;
     [self addAltitudePoint];
     [self updateGraph];
     [self updateLabels:true];
+    [self updateBarometer];
 }
 - (void)addAltitudePoint{
     NSNumber *altitude = [NSNumber numberWithInt:(int)self.currentLocation.altitude];
@@ -251,10 +253,10 @@ UIActivityIndicatorView *spinner;
 
     self.currentHeading = &theHeading;
     compassLabel.text = [NSString stringWithFormat:@"%i", (int)newHeading.magneticHeading];
-    if(!spinner.hidden){
-        [spinner stopAnimating];
-        spinner.hidden = true;
-        [spinner removeFromSuperview];
+    if(!altSpinner.hidden){
+        [altSpinner stopAnimating];
+        altSpinner.hidden = true;
+        [altSpinner removeFromSuperview];
     }
     //[self updateHeadingDisplays];
 }
@@ -303,11 +305,32 @@ UIActivityIndicatorView *spinner;
     compassLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 80, 80)];
     acclView = [[UIView alloc] initWithFrame:CGRectMake(xCo-100, 425, 90, 90)];
     utilView = [[UIView alloc] initWithFrame:CGRectMake(10, 375, xCo-120, 140)];
-    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    spinner.center = CGPointMake(40, 40);
-    spinner.hidesWhenStopped = YES;
-    [compassLabel addSubview:spinner];
-    [spinner startAnimating];
+    altSpinner = [[UIActivityIndicatorView alloc]
+                  initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    altSpinner.center = CGPointMake(40, 40);
+    altSpinner.hidesWhenStopped = YES;
+    barometerSpinner = [[UIActivityIndicatorView alloc]
+                        initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    barometerSpinner.center = CGPointMake(40,40);
+    barometerSpinner.hidesWhenStopped = YES;
+    [compassLabel addSubview:altSpinner];
+    [barometerLabel addSubview:barometerSpinner];
+    [altSpinner startAnimating];
+    [barometerSpinner startAnimating];
+    
+}
+-(void)updateBarometer{
+    CMAltimeter *altimeter = [[CMAltimeter alloc] init];
+    if(!barometerSpinner.hidden){
+        [barometerSpinner stopAnimating];
+        barometerSpinner.hidden = true;
+        [barometerSpinner removeFromSuperview];
+    }
+    if (CMAltimeter.isRelativeAltitudeAvailable) {
+        barometerLabel.text = @"AVA";
+        return;
+    }
+    barometerLabel.text = @"NA";
 }
 
 
