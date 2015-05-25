@@ -9,7 +9,7 @@
 #import "MainViewController.h"
 #import "DBManager.h"
 #import "ApplicationGlobals.h"
-//#import "LineChart.h"
+#import "LineChart.h"
 #import "NSArray+AltitudeQueue.h"
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
@@ -46,7 +46,7 @@ UIActivityIndicatorView *barometerSpinner;
     [super viewDidLoad];
     //Do any additional setup after loading the view, typically from a nib.
     self.locationManager = [[CLLocationManager alloc] init];
-    dbManager = [DBManager getSharedDBManager];
+    dbManager = [DBManager sharedDBManager];
     appGlobals = [ApplicationGlobals sharedAppGlobals];
     altQueue = [[NSMutableArray alloc] init];
     self.currentLocation = [[CLLocation alloc] init];
@@ -209,7 +209,7 @@ UIActivityIndicatorView *barometerSpinner;
         }
         if(d > 9){
             [self addAltitudePoint];
-            //[self updateGraph];
+            [self updateGraph];
             [self updateLabels:true];
             return;
         }
@@ -217,7 +217,7 @@ UIActivityIndicatorView *barometerSpinner;
         return;
     }
     [self addAltitudePoint];
-    //[self updateGraph];
+    [self updateGraph];
     [self updateLabels:true];
     [self updateBarometer];
 }
@@ -237,11 +237,9 @@ UIActivityIndicatorView *barometerSpinner;
     }
 }
 
-/*
-
 - (void)updateGraph{
     [self.chart1 clearChartData];
-    //[self.chart1 setChartData:altQueue];
+    [self.chart1 setChartData:altQueue];
     [utilView addSubview:[self chart1]];
     [self.view addSubview:utilView];
 }
@@ -282,7 +280,7 @@ UIActivityIndicatorView *barometerSpinner;
         chartData[i] = [NSNumber numberWithInt:1600 + r];
     }
     */
-    /*
+    
     LineChart* lineChart = [[LineChart alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width - 120, 140)];
     lineChart.verticalGridStep = 5;
     lineChart.horizontalGridStep = 9;
@@ -300,7 +298,7 @@ UIActivityIndicatorView *barometerSpinner;
     return lineChart;
 }
 
-*/
+
 -(void)initViews{
     float xCo = self.view.bounds.size.width;
     factLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, xCo-130, 75)];

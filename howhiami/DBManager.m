@@ -17,17 +17,20 @@ static sqlite3 *database = nil;
 static sqlite3_stmt *statement = nil;
 
 NSString* const createFactsTableString = @"create table if not exists facts(local_id integer primary key autoincrement, timestamp int NOT NULL, altitude int, fact var_char(255))";
+NSString* const createAltitudeTableString = @"create table if not exists altitude(local_id integer primary key autoincrement, timestamp int NOT NULL, altitude int)";
 NSString* const databaseName = @"howhimi.db";
 NSString* const initFactListName = @"fact_list_20150413.txt";
 
 @implementation DBManager
 
-+(DBManager*)getSharedDBManager{
-    if (!sharedDBManager) {
-        sharedDBManager = [[super allocWithZone:NULL]init];
++ (id)sharedDBManager {
+    static DBManager *sharedDBManager = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedDBManager = [[self alloc] init];
         [sharedDBManager createTable:createFactsTableString];
-        NSLog(@"%s", __PRETTY_FUNCTION__);
-    }
+        [sharedDBManager createTable:createAltitudeTableString];
+    });
     return sharedDBManager;
 }
 -(NSArray*)getInitFacts{
@@ -62,7 +65,7 @@ NSString* const initFactListName = @"fact_list_20150413.txt";
 
 
 -(BOOL)createTable:(NSString *)createString{
-    //NSLog(@"create facts table called");
+    NSLog(@"create table called %@", createString);
     NSString *docsDir;
     NSArray *dirPaths;
     // Get the documents directory
@@ -87,7 +90,6 @@ NSString* const initFactListName = @"fact_list_20150413.txt";
             //NSLog(msg);
             NSLog(@"Failed to open/create database");
         }
-        //sqlite3_finalize(statement);
         sqlite3_close(database);
         return  isSuccess;
     }
@@ -105,6 +107,31 @@ NSString* const initFactListName = @"fact_list_20150413.txt";
         sqlite3_prepare_v2(database, insert_stmt,-1, &statement, NULL);
         if (sqlite3_step(statement) == SQLITE_DONE){
             NSLog(@"fact saved to db");
+            sqlite3_finalize(statement);
+            sqlite3_close(database);
+            return true;
+        }
+        else{
+            NSLog(@"Error while inserting data. '%s'", sqlite3_errmsg(database));
+            sqlite3_close(database);
+            return false;
+        }
+    }
+    sqlite3_close(database);
+    NSLog(@"failed to save message");
+    return false;
+}
+- (BOOL) saveAltitude:(NSDictionary *)msgJSON{
+    const char *dbpath = [databasePath UTF8String];
+    if (sqlite3_open(dbpath, &database) == SQLITE_OK)
+    {
+        NSString *insertSQL = [NSString stringWithFormat:@"insert into altitude (timestamp, altitude) values(\"%@\", \"%@\")",
+                               [msgJSON objectForKey:@"timestamp"],
+                               [msgJSON objectForKey:@"alt"]];
+        const char *insert_stmt = [insertSQL UTF8String];
+        sqlite3_prepare_v2(database, insert_stmt,-1, &statement, NULL);
+        if (sqlite3_step(statement) == SQLITE_DONE){
+            NSLog(@"alt saved to db");
             sqlite3_finalize(statement);
             sqlite3_close(database);
             return true;

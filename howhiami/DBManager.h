@@ -14,12 +14,13 @@
     NSString *databasePath;
 }
 
-+ (DBManager*)getSharedDBManager;
++ (id)sharedDBManager;
 - (NSArray*)getInitFacts;
 - (BOOL) checkTableExists:(NSString *)tableName;
 - (int) getTableRowCount:(NSString *)tableName;
 - (NSString *) getFact:(int) alt;
 - (BOOL) dropTable:(NSString*)tableName;
+- (BOOL) saveAltitude:(NSDictionary *)msgJSON;
 
 
 @end
