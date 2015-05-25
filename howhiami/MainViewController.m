@@ -9,7 +9,7 @@
 #import "MainViewController.h"
 #import "DBManager.h"
 #import "ApplicationGlobals.h"
-#import "LineChart.h"
+//#import "LineChart.h"
 #import "NSArray+AltitudeQueue.h"
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
@@ -209,7 +209,7 @@ UIActivityIndicatorView *barometerSpinner;
         }
         if(d > 9){
             [self addAltitudePoint];
-            [self updateGraph];
+            //[self updateGraph];
             [self updateLabels:true];
             return;
         }
@@ -217,7 +217,7 @@ UIActivityIndicatorView *barometerSpinner;
         return;
     }
     [self addAltitudePoint];
-    [self updateGraph];
+    //[self updateGraph];
     [self updateLabels:true];
     [self updateBarometer];
 }
@@ -236,6 +236,8 @@ UIActivityIndicatorView *barometerSpinner;
         [altQueue enqueue:point];
     }
 }
+
+/*
 
 - (void)updateGraph{
     [self.chart1 clearChartData];
@@ -264,12 +266,14 @@ UIActivityIndicatorView *barometerSpinner;
 -(LineChart*)chart1 {
     //NSMutableArray *chartData = altQueue;
     NSMutableArray *chartData = [[NSMutableArray alloc] init];
+    [appGlobals.altitudeArray removeAllObjects];
     for(int i=0;i<altQueue.count;i++) {
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
         dict = altQueue[i];
         NSNumber *altitude = [dict valueForKey:@"altitude"];
         NSLog(@"ChartData Item: %@", altitude);
         [chartData addObject:altitude];
+        [appGlobals.altitudeArray addObject:altitude];
     }
     
     /*
@@ -278,6 +282,7 @@ UIActivityIndicatorView *barometerSpinner;
         chartData[i] = [NSNumber numberWithInt:1600 + r];
     }
     */
+    /*
     LineChart* lineChart = [[LineChart alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width - 120, 140)];
     lineChart.verticalGridStep = 5;
     lineChart.horizontalGridStep = 9;
@@ -290,9 +295,12 @@ UIActivityIndicatorView *barometerSpinner;
         return [NSString stringWithFormat:@"%.f", value];
     };
     
-    [lineChart setChartData:chartData];
+    //[lineChart setChartData:chartData];
+    [lineChart setChartData:appGlobals.altitudeArray];
     return lineChart;
 }
+
+*/
 -(void)initViews{
     float xCo = self.view.bounds.size.width;
     factLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, xCo-130, 75)];

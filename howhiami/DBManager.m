@@ -16,21 +16,25 @@ static DBManager *sharedDBManager = nil;
 static sqlite3 *database = nil;
 static sqlite3_stmt *statement = nil;
 
+NSString* const createFactsTableString = @"create table if not exists facts(local_id integer primary key autoincrement, timestamp int NOT NULL, altitude int, fact var_char(255))";
+NSString* const databaseName = @"howhimi.db";
+NSString* const initFactListName = @"fact_list_20150413.txt";
+
 @implementation DBManager
 
 +(DBManager*)getSharedDBManager{
     if (!sharedDBManager) {
         sharedDBManager = [[super allocWithZone:NULL]init];
-        [sharedDBManager createFactsTable];
+        [sharedDBManager createTable:createFactsTableString];
         NSLog(@"%s", __PRETTY_FUNCTION__);
     }
     return sharedDBManager;
 }
 -(NSArray*)getInitFacts{
     //NSLog(@"pop Table");
-    [self createFactsTable];
+    [self createTable:createFactsTableString];
     NSString *path = [[NSBundle mainBundle] bundlePath];
-    NSString *filePath = [path stringByAppendingPathComponent:@"fact_list_20150413.txt"];
+    NSString *filePath = [path stringByAppendingPathComponent:initFactListName];
     NSString *contentStr = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
 
     NSData *jsonData = [contentStr dataUsingEncoding:NSUTF8StringEncoding];
@@ -40,7 +44,7 @@ static sqlite3_stmt *statement = nil;
     NSArray *jsonArray = [NSJSONSerialization JSONObjectWithData: jsonData options: NSJSONReadingMutableContainers error: &e];
     //NSLog(@"count %i", (int)[jsonArray count]);
     //check if data exists in table and return the array w/o saving if so.
-    if([self getFactTableRowsCount] > 1)return jsonArray;
+    if([self getTableRowCount:@"facts"] > 1)return jsonArray;
     //NSTimeInterval timeInterval = [[NSDate date] timeIntervalSince1970];
     //int timestamp = (int)timeInterval;
     int i = 0;
@@ -57,7 +61,7 @@ static sqlite3_stmt *statement = nil;
 }
 
 
--(BOOL)createFactsTable{
+-(BOOL)createTable:(NSString *)createString{
     //NSLog(@"create facts table called");
     NSString *docsDir;
     NSArray *dirPaths;
@@ -67,17 +71,13 @@ static sqlite3_stmt *statement = nil;
     docsDir = dirPaths[0];
     // Build the path to the database file
     databasePath = [[NSString alloc] initWithString:
-                    [docsDir stringByAppendingPathComponent: @"howhimi.db"]];
+                    [docsDir stringByAppendingPathComponent: databaseName]];
     BOOL isSuccess = YES;
     const char *dbpath = [databasePath UTF8String];
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
         char *errMsg;
-        const char *sql_stmt =
-        "create table if not exists facts(local_id integer primary key autoincrement, "
-        "timestamp int NOT NULL, "
-        "altitude int, "
-        "fact var_char(255))";
+        const char *sql_stmt = [createString UTF8String];
         
         if (sqlite3_exec(database, sql_stmt, NULL, NULL, &errMsg)
             != SQLITE_OK)
@@ -120,12 +120,12 @@ static sqlite3_stmt *statement = nil;
     return false;
 }
 
-- (BOOL) checkFactTableExists{
+- (BOOL) checkTableExists:(NSString *)tableName{
     //NSLog(@"check Table called");
     const char *dbpath = [databasePath UTF8String];
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
-        NSString *querySQL = [NSString stringWithFormat:@"SELECT * FROM facts"];
+        NSString *querySQL = [NSString stringWithFormat:@"SELECT * FROM %@ LIMIT 1", tableName];
         const char *query_stmt = [querySQL UTF8String];
 
         if (sqlite3_prepare_v2(database, query_stmt, -1, &statement, NULL) == SQLITE_OK)
@@ -145,13 +145,13 @@ static sqlite3_stmt *statement = nil;
     NSLog(@"Return Nil");
     return false;
 }
-- (int) getFactTableRowsCount
-{
+- (int) getTableRowCount:(NSString *)tableName{
     int count = 0;
     const char *dbpath = [databasePath UTF8String];
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
-        const char* sqlStatement = "SELECT COUNT(*) FROM facts";
+        NSString* sql_str = [NSString stringWithFormat: @"SELECT COUNT(*) FROM %@", tableName];
+        const char* sqlStatement = [sql_str UTF8String];
         sqlite3_stmt *statement;
         if( sqlite3_prepare_v2(database, sqlStatement, -1, &statement, NULL) == SQLITE_OK )
         {
@@ -201,22 +201,21 @@ static sqlite3_stmt *statement = nil;
     //NSLog(@"... %@", fact);
     return fact;
 }
--(BOOL) dropTable:(NSString*)table{
+-(BOOL) dropTable:(NSString*)tableName{
     NSString *docsDir;
-    NSString *sql_str = [NSString stringWithFormat:@"DROP TABLE IF EXISTS %@", table];
+    NSString *sql_str = [NSString stringWithFormat:@"DROP TABLE IF EXISTS %@", tableName];
     NSArray *dirPaths;
     dirPaths = NSSearchPathForDirectoriesInDomains
     (NSDocumentDirectory, NSUserDomainMask, YES);
     docsDir = dirPaths[0];
     databasePath = [[NSString alloc] initWithString:
-                    [docsDir stringByAppendingPathComponent: @"howhimi.db"]];
+                    [docsDir stringByAppendingPathComponent:databaseName]];
     const char *dbpath = [databasePath UTF8String];
     const char *drop_stmt = [sql_str UTF8String];
     
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
         char *errMsg;
-        //const char *drop_stmt = "Drop Table matches";
         if (sqlite3_exec(database, drop_stmt, NULL, NULL, &errMsg)!= SQLITE_OK){
             NSString *msg = [NSString stringWithFormat:@"%s", errMsg];
             NSLog(@"Failed to drop table: %@", msg);

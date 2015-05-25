@@ -16,10 +16,10 @@
 
 + (DBManager*)getSharedDBManager;
 - (NSArray*)getInitFacts;
-- (BOOL) checkFactTableExists;
-- (int) getFactTableRowsCount;
+- (BOOL) checkTableExists:(NSString *)tableName;
+- (int) getTableRowCount:(NSString *)tableName;
 - (NSString *) getFact:(int) alt;
-- (BOOL) dropTable:(NSString*)table;
+- (BOOL) dropTable:(NSString*)tableName;
 
 
 @end

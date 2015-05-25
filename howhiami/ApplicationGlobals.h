@@ -9,7 +9,7 @@
 #import <foundation/Foundation.h>
 
 @interface ApplicationGlobals : NSObject
-
+@property(nonatomic) NSMutableArray *altitudeArray;
 
 + (id)sharedAppGlobals;
 

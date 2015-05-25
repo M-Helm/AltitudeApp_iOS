@@ -24,7 +24,7 @@
 
 - (id)init {
     if (self = [super init]) {
-        //self.altitudeArray = [[NSMutableArray alloc] init];
+        self.altitudeArray = [[NSMutableArray alloc] init];
         //someProperty = [[NSString alloc] initWithString:@"Default Property Value"];
     }
     return self;
