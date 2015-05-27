@@ -186,14 +186,15 @@ ApplicationGlobals *appGlobals;
     NSString* text = _labelForIndex(alt.integerValue);
     //NSString* text = _labelForIndex(_data[itemIndex]);
 
-    NSLog(@"x axis string: %@", alt);
+    //NSLog(@"x axis string: %@", alt);
     //NSString* text = _labelForIndex(i);
     if(!text)
     {
         return nil;
     }
     
-    CGPoint p = CGPointMake(_margin + index * (_axisWidth / _horizontalGridStep) * scale, _axisHeight + _margin);
+    //CGPoint p = CGPointMake(_margin + index * (_axisWidth / _horizontalGridStep) * scale, _axisHeight + _margin);
+    CGPoint p = CGPointMake(-2 + index * (_axisWidth / _horizontalGridStep) * scale, _axisHeight + _margin);
     
     //CGRect rect = CGRectMake(_margin, p.y + 2, self.frame.size.width - _margin * 2 - 4.0f, 14);
     CGRect rect = CGRectMake(_margin, p.y + 2, self.frame.size.width - _margin * 2 - 4.0f, 1);

@@ -28,7 +28,9 @@ NSString* const initFactListName = @"fact_list_20150413.txt";
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         sharedDBManager = [[self alloc] init];
-        [sharedDBManager createTable:createFactsTableString];
+        if(![sharedDBManager checkTableExists:@"facts"]){
+            [sharedDBManager createTable:createFactsTableString];
+        }
         [sharedDBManager createTable:createAltitudeTableString];
     });
     return sharedDBManager;
@@ -64,7 +66,7 @@ NSString* const initFactListName = @"fact_list_20150413.txt";
 }
 
 -(BOOL)createTable:(NSString *)createString{
-    NSLog(@"create table called %@", createString);
+    //NSLog(@"create table called %@", createString);
     NSString *docsDir;
     NSArray *dirPaths;
     // Get the documents directory
@@ -152,7 +154,7 @@ NSString* const initFactListName = @"fact_list_20150413.txt";
         const char *query_stmt = [sql_str UTF8String];
         if (sqlite3_prepare_v2(database, query_stmt, -1, &statement, NULL) == SQLITE_OK)
         {
-            NSLog(@"msg sql ok");
+            //NSLog(@"msg sql ok");
             if(sqlite3_step(statement) > 0){
                 NSLog(@"step > 0 %i", sqlite3_step(statement));
             }
@@ -160,8 +162,11 @@ NSString* const initFactListName = @"fact_list_20150413.txt";
             {
                 NSString *altitude = [[NSString alloc] initWithUTF8String:
                         (const char *) sqlite3_column_text(statement, 2)];
-                int i = altitude.integerValue;
+                NSString *timestamp = [[NSString alloc] initWithUTF8String:
+                                      (const char *) sqlite3_column_text(statement, 1)];
+                int i = (int)altitude.integerValue;
                 NSLog(@"alt string = %@", altitude);
+                NSLog(@"ts string = %@", timestamp);
                 NSNumber *alt = [NSNumber numberWithInt:i];
                 [queryArray addObject:alt];
             }
@@ -169,6 +174,7 @@ NSString* const initFactListName = @"fact_list_20150413.txt";
         sqlite3_finalize(statement);
         sqlite3_close(database);
     }
+    //[self cullAltitudeTable];
     return queryArray;
 }
 
@@ -185,6 +191,7 @@ NSString* const initFactListName = @"fact_list_20150413.txt";
             NSLog(@"msg sql ok");
             if(sqlite3_step(statement) > 0){
                 NSLog(@"step > 0 %i", sqlite3_step(statement));
+                return true;
             }
             while (sqlite3_step(statement) == SQLITE_ROW)
             {
@@ -291,11 +298,13 @@ NSString* const initFactListName = @"fact_list_20150413.txt";
         {
             if(sqlite3_step(statement) > 21){
                 NSString *lastTS = [[NSString alloc] initWithUTF8String:
-                                      (const char *) sqlite3_column_text(statement, 0)];
-                int i = lastTS.integerValue;
-                i = i - 260000;
+                                      (const char *) sqlite3_column_text(statement, 1)];
+                NSLog(@"last DB TS: %@", lastTS);
+                int i = (int)lastTS.integerValue;
+                //i = i - 260000;
+                i = i - 300;
                 NSLog(@"id string = %i", i);
-                NSString *delete_str = [NSString stringWithFormat:@"DELETE * FROM altitude WHERE timestamp < %i", i];
+                NSString *delete_str = [NSString stringWithFormat:@"DELETE FROM altitude WHERE timestamp < %i", i];
                 const char *delete_stmt = [delete_str UTF8String];
                 char *errMsg;
                 if (sqlite3_exec(database, delete_stmt, NULL, NULL, &errMsg)!= SQLITE_OK){

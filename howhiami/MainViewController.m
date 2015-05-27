@@ -69,6 +69,8 @@ UIActivityIndicatorView *altSpinner;
     
     self.firstUnitLabel = @"meters";
     self.secondUnitLabel = @"feet";
+    
+    self.view.backgroundColor = [UIColor whiteColor];
     [self initViews];
 
     //[dbManager dropTable:@"facts"];
@@ -171,6 +173,7 @@ UIActivityIndicatorView *altSpinner;
     utilView.layer.masksToBounds = NO;
     [self.view addSubview:utilView];
     [self updateLabels:true];
+    //[self updateGraph];
     
 }
 
@@ -274,6 +277,12 @@ UIActivityIndicatorView *altSpinner;
 
 -(AltitudeLineChart*)chart1 {
     NSMutableArray* chartData = [[NSMutableArray alloc] init];
+    if(appGlobals.altitudeArray.count < 1){
+        NSNumber* alt = [NSNumber numberWithInt:0];
+        NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
+        [dict setObject:alt forKey:@"altitude"];
+        [appGlobals.altitudeArray addObject:dict];
+    }
     for(int i=0;i<appGlobals.altitudeArray.count;i++) {
         NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
         dict = appGlobals.altitudeArray[i];
