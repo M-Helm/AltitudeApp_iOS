@@ -81,7 +81,6 @@ UIActivityIndicatorView *barometerSpinner;
         [dict setObject:@"0" forKey:@"timestamp"];
         [dict setObject:[array objectAtIndex:i] forKey:@"altitude"];
         [appGlobals.altitudeArray enqueue:dict];
-        //[appGlobals.altitudeArray enqueue:[array objectAtIndex:i]];
     }
 }
 
@@ -228,7 +227,6 @@ UIActivityIndicatorView *barometerSpinner;
     [self addAltitudePoint];
     [self updateGraph];
     [self updateLabels:true];
-    [self updateBarometer];
 }
 - (void)addAltitudePoint{
     NSNumber *altitude = [NSNumber numberWithInt:(int)self.currentLocation.altitude];
@@ -250,11 +248,6 @@ UIActivityIndicatorView *barometerSpinner;
 - (void)updateGraph{
     NSLog(@"update Graph called");
     [self.chart1 clearChartData];
-    NSMutableArray *array = [[NSMutableArray alloc] init];
-    for(int i = 0; i<appGlobals.altitudeArray.count; i++){
-        //NSDictionary *dict =
-    }
-    //[self.chart1 setChartData:appGlobals.altitudeArray];
     [utilView addSubview:[self chart1]];
     [self.view addSubview:utilView];
 }
@@ -277,24 +270,14 @@ UIActivityIndicatorView *barometerSpinner;
 }
 
 -(LineChart*)chart1 {
-    //NSMutableArray *chartData = altQueue;
     NSMutableArray *chartData = [[NSMutableArray alloc] init];
-    //[appGlobals.altitudeArray removeAllObjects];
     for(int i=0;i<appGlobals.altitudeArray.count;i++) {
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
         dict = appGlobals.altitudeArray[i];
         NSNumber *altitude = [dict valueForKey:@"altitude"];
-        NSLog(@"ChartData Item: %@", altitude);
+        //NSLog(@"ChartData Item: %@", altitude);
         [chartData addObject:altitude];
-        //[appGlobals.altitudeArray addObject:altitude];
     }
-    
-    /*
-    for(int i=0;i<10;i++) {
-        int r = (rand() + rand()) % 100;
-        chartData[i] = [NSNumber numberWithInt:1600 + r];
-    }
-    */
     
     LineChart* lineChart = [[LineChart alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width - 120, 140)];
     lineChart.verticalGridStep = 5;
@@ -340,20 +323,6 @@ UIActivityIndicatorView *barometerSpinner;
     [barometerSpinner startAnimating];
     
 }
--(void)updateBarometer{
-    CMAltimeter *altimeter = [[CMAltimeter alloc] init];
-    if(!barometerSpinner.hidden){
-        [barometerSpinner stopAnimating];
-        barometerSpinner.hidden = true;
-        [barometerSpinner removeFromSuperview];
-    }
-    if (CMAltimeter.isRelativeAltitudeAvailable) {
-        barometerLabel.text = @"AVA";
-        return;
-    }
-    barometerLabel.text = @"NA";
-}
-
 
 @end
 

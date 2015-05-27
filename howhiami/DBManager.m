@@ -85,8 +85,6 @@ NSString* const initFactListName = @"fact_list_20150413.txt";
             != SQLITE_OK)
         {
             isSuccess = NO;
-            //NSString *msg = [NSString stringWithFormat:@"%s", errMsg];
-            //NSLog(msg);
             NSLog(@"Failed to open/create database");
         }
         sqlite3_close(database);
@@ -199,6 +197,7 @@ NSString* const initFactListName = @"fact_list_20150413.txt";
     NSLog(@"Return Nil");
     return false;
 }
+
 - (int) getTableRowCount:(NSString *)tableName{
     int count = 0;
     const char *dbpath = [databasePath UTF8String];
@@ -224,14 +223,14 @@ NSString* const initFactListName = @"fact_list_20150413.txt";
         sqlite3_finalize(statement);
         sqlite3_close(database);
     }
-    
     return count;
 }
+
 - (NSString *) getFact:(int) alt{
     int altBoundLo = alt - 51;
     int altBoundHi = alt + 51;
-    //NSLog(@"getFact called %i %i", altBoundLo, altBoundHi);
-    NSString *fact = @"Database error";
+    //NSString *fact = @"Database error";
+    NSString *fact = @"";
     const char *dbpath = [databasePath UTF8String];
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
@@ -255,6 +254,7 @@ NSString* const initFactListName = @"fact_list_20150413.txt";
     //NSLog(@"... %@", fact);
     return fact;
 }
+
 -(BOOL) dropTable:(NSString*)tableName{
     NSString *docsDir;
     NSString *sql_str = [NSString stringWithFormat:@"DROP TABLE IF EXISTS %@", tableName];
@@ -266,7 +266,6 @@ NSString* const initFactListName = @"fact_list_20150413.txt";
                     [docsDir stringByAppendingPathComponent:databaseName]];
     const char *dbpath = [databasePath UTF8String];
     const char *drop_stmt = [sql_str UTF8String];
-    
     if (sqlite3_open(dbpath, &database) == SQLITE_OK)
     {
         char *errMsg;
@@ -282,6 +281,38 @@ NSString* const initFactListName = @"fact_list_20150413.txt";
     }
     return false;
 }
-
+-(void)cullAltitudeTable{
+    NSString *sql_str = @"SELECT * FROM altitude ORDER BY local_id DESC";
+    const char *dbpath = [databasePath UTF8String];
+    if (sqlite3_open(dbpath, &database) == SQLITE_OK)
+    {
+        const char *query_stmt = [sql_str UTF8String];
+        if (sqlite3_prepare_v2(database, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            if(sqlite3_step(statement) > 21){
+                NSString *lastTS = [[NSString alloc] initWithUTF8String:
+                                      (const char *) sqlite3_column_text(statement, 0)];
+                int i = lastTS.integerValue;
+                i = i - 260000;
+                NSLog(@"id string = %i", i);
+                NSString *delete_str = [NSString stringWithFormat:@"DELETE * FROM altitude WHERE timestamp < %i", i];
+                const char *delete_stmt = [delete_str UTF8String];
+                char *errMsg;
+                if (sqlite3_exec(database, delete_stmt, NULL, NULL, &errMsg)!= SQLITE_OK){
+                    NSString *msg = [NSString stringWithFormat:@"%s", errMsg];
+                    NSLog(@"Failed to delete rows: %@", msg);
+                    sqlite3_finalize(statement);
+                    sqlite3_close(database);
+                    return;
+                }else{
+                    sqlite3_close(database);
+                    return;
+                }
+            }
+            sqlite3_close(database);
+        }
+    }
+}
 
 @end
+
