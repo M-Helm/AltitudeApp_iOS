@@ -22,7 +22,7 @@
 
 DBManager *dbManager;
 ApplicationGlobals *appGlobals;
-NSMutableArray *altQueue;
+//NSMutableArray *altQueue;
 
 
 UIView *altView;
@@ -48,7 +48,7 @@ UIActivityIndicatorView *barometerSpinner;
     self.locationManager = [[CLLocationManager alloc] init];
     dbManager = [DBManager sharedDBManager];
     appGlobals = [ApplicationGlobals sharedAppGlobals];
-    altQueue = [[NSMutableArray alloc] init];
+    //altQueue = [[NSMutableArray alloc] init];
     self.currentLocation = [[CLLocation alloc] init];
     self.lastTimestamp = 0;
     
@@ -74,7 +74,17 @@ UIActivityIndicatorView *barometerSpinner;
     //[dbManager dropTable:@"facts"];
     [dbManager getInitFacts];
     
+    
+    NSArray *array = [dbManager getAltitudeArray];
+    for(int i = 0; i<array.count; i++){
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+        [dict setObject:@"0" forKey:@"timestamp"];
+        [dict setObject:[array objectAtIndex:i] forKey:@"altitude"];
+        [appGlobals.altitudeArray enqueue:dict];
+        //[appGlobals.altitudeArray enqueue:[array objectAtIndex:i]];
+    }
 }
+
 - (void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
     //float xCo = self.view.bounds.size.width;
@@ -192,7 +202,6 @@ UIActivityIndicatorView *barometerSpinner;
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     //NSLog(@"locations array count: %i",(int)[locations count]);
-
     //Make sure a fact is showing
     if([fact length] < 10){
         [self updateLabels:true];
@@ -230,19 +239,26 @@ UIActivityIndicatorView *barometerSpinner;
     if((int)timeStamp - _lastTimestamp > 150){
         _lastTimestamp = (int)timeStamp;
         NSLog(@"time: %@", timeStamp);
-        NSMutableDictionary *point = [[NSMutableDictionary alloc] init];
-        [point setObject:timeStamp forKey:@"timestamp"];
-        [point setObject:altitude forKey:@"altitude"];
-        [altQueue enqueue:point];
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+        [dict setObject:timeStamp forKey:@"timestamp"];
+        [dict setObject:altitude forKey:@"altitude"];
+        [appGlobals.altitudeArray enqueue:dict];
+        [dbManager saveAltitude:dict];
     }
 }
 
 - (void)updateGraph{
+    NSLog(@"update Graph called");
     [self.chart1 clearChartData];
-    [self.chart1 setChartData:altQueue];
+    NSMutableArray *array = [[NSMutableArray alloc] init];
+    for(int i = 0; i<appGlobals.altitudeArray.count; i++){
+        //NSDictionary *dict =
+    }
+    //[self.chart1 setChartData:appGlobals.altitudeArray];
     [utilView addSubview:[self chart1]];
     [self.view addSubview:utilView];
 }
+
 - (void)locationManager:(CLLocationManager *)manager didUpdateHeading:(CLHeading *)newHeading {
     if (newHeading.headingAccuracy < 0){
         return;
@@ -250,7 +266,6 @@ UIActivityIndicatorView *barometerSpinner;
     // Use the true heading if it is valid.
     CLLocationDirection theHeading = ((newHeading.trueHeading > 0) ?
                                        newHeading.trueHeading : newHeading.magneticHeading);
-
     self.currentHeading = &theHeading;
     compassLabel.text = [NSString stringWithFormat:@"%i", (int)newHeading.magneticHeading];
     if(!altSpinner.hidden){
@@ -264,14 +279,14 @@ UIActivityIndicatorView *barometerSpinner;
 -(LineChart*)chart1 {
     //NSMutableArray *chartData = altQueue;
     NSMutableArray *chartData = [[NSMutableArray alloc] init];
-    [appGlobals.altitudeArray removeAllObjects];
-    for(int i=0;i<altQueue.count;i++) {
+    //[appGlobals.altitudeArray removeAllObjects];
+    for(int i=0;i<appGlobals.altitudeArray.count;i++) {
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-        dict = altQueue[i];
+        dict = appGlobals.altitudeArray[i];
         NSNumber *altitude = [dict valueForKey:@"altitude"];
         NSLog(@"ChartData Item: %@", altitude);
         [chartData addObject:altitude];
-        [appGlobals.altitudeArray addObject:altitude];
+        //[appGlobals.altitudeArray addObject:altitude];
     }
     
     /*
@@ -284,20 +299,20 @@ UIActivityIndicatorView *barometerSpinner;
     LineChart* lineChart = [[LineChart alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width - 120, 140)];
     lineChart.verticalGridStep = 5;
     lineChart.horizontalGridStep = 9;
-    
+    NSLog(@"sig 1");
     lineChart.labelForIndex = ^(NSUInteger item) {
         return [NSString stringWithFormat:@"%lu",(unsigned long)item];
     };
-    
+    NSLog(@"sig 2");
     lineChart.labelForValue = ^(CGFloat value) {
         return [NSString stringWithFormat:@"%.f", value];
     };
-    
-    //[lineChart setChartData:chartData];
-    [lineChart setChartData:appGlobals.altitudeArray];
+    NSLog(@"sig 3");
+    [lineChart setChartData:chartData];
+    //[lineChart setChartData:appGlobals.altitudeArray];
+    NSLog(@"sig 4");
     return lineChart;
 }
-
 
 -(void)initViews{
     float xCo = self.view.bounds.size.width;

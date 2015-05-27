@@ -63,7 +63,6 @@ NSString* const initFactListName = @"fact_list_20150413.txt";
     return jsonArray;
 }
 
-
 -(BOOL)createTable:(NSString *)createString{
     NSLog(@"create table called %@", createString);
     NSString *docsDir;
@@ -127,7 +126,7 @@ NSString* const initFactListName = @"fact_list_20150413.txt";
     {
         NSString *insertSQL = [NSString stringWithFormat:@"insert into altitude (timestamp, altitude) values(\"%@\", \"%@\")",
                                [msgJSON objectForKey:@"timestamp"],
-                               [msgJSON objectForKey:@"alt"]];
+                               [msgJSON objectForKey:@"altitude"]];
         const char *insert_stmt = [insertSQL UTF8String];
         sqlite3_prepare_v2(database, insert_stmt,-1, &statement, NULL);
         if (sqlite3_step(statement) == SQLITE_DONE){
@@ -145,6 +144,34 @@ NSString* const initFactListName = @"fact_list_20150413.txt";
     sqlite3_close(database);
     NSLog(@"failed to save message");
     return false;
+}
+- (NSArray *)getAltitudeArray{
+    NSString *sql_str = @"SELECT * FROM altitude ORDER BY local_id DESC LIMIT 20";
+    NSMutableArray *queryArray = [[NSMutableArray alloc] init];
+    const char *dbpath = [databasePath UTF8String];
+    if (sqlite3_open(dbpath, &database) == SQLITE_OK)
+    {
+        const char *query_stmt = [sql_str UTF8String];
+        if (sqlite3_prepare_v2(database, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            NSLog(@"msg sql ok");
+            if(sqlite3_step(statement) > 0){
+                NSLog(@"step > 0 %i", sqlite3_step(statement));
+            }
+            while (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                NSString *altitude = [[NSString alloc] initWithUTF8String:
+                        (const char *) sqlite3_column_text(statement, 2)];
+                int i = altitude.integerValue;
+                NSLog(@"alt string = %@", altitude);
+                NSNumber *alt = [NSNumber numberWithInt:i];
+                [queryArray addObject:alt];
+            }
+        }
+        sqlite3_finalize(statement);
+        sqlite3_close(database);
+    }
+    return queryArray;
 }
 
 - (BOOL) checkTableExists:(NSString *)tableName{

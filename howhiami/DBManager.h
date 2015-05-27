@@ -21,6 +21,6 @@
 - (NSString *) getFact:(int) alt;
 - (BOOL) dropTable:(NSString*)tableName;
 - (BOOL) saveAltitude:(NSDictionary *)msgJSON;
-
+- (NSArray *)getAltitudeArray;
 
 @end
