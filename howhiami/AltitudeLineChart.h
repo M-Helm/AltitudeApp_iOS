@@ -3,7 +3,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LineChart : UIView
+@interface AltitudeLineChart : UIView
 
 // Block definition for getting a label for a set index (use case: date, units,...)
 typedef NSString *(^FSLabelForIndexGetter)(NSUInteger index);

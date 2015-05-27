@@ -1,9 +1,10 @@
 
 
 #import <QuartzCore/QuartzCore.h>
-#import "LineChart.h"
+#import "AltitudeLineChart.h"
+#import "ApplicationGlobals.h"
 
-@interface LineChart ()
+@interface AltitudeLineChart ()
 
 @property (nonatomic, strong) NSMutableArray* data;
 @property (nonatomic, strong) NSMutableArray* layers;
@@ -15,9 +16,10 @@
 
 @end
 
-@implementation LineChart
+@implementation AltitudeLineChart
 
 #pragma mark - Initialisation
+ApplicationGlobals *appGlobals;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -46,13 +48,14 @@
 {
     _layers = [NSMutableArray array];
     self.backgroundColor = [UIColor whiteColor];
+    appGlobals = [ApplicationGlobals sharedAppGlobals];
     [self setDefaultParameters];
 }
 
 - (void)setDefaultParameters
 {
     _color = [UIColor lightGrayColor];
-    _fillColor = [_color colorWithAlphaComponent:0.25];
+    _fillColor = [_color colorWithAlphaComponent:0.0];
     _verticalGridStep = 3;
     _horizontalGridStep = 3;
     _margin = 5.0f;
@@ -61,13 +64,13 @@
     _axisColor = [UIColor colorWithWhite:0.7 alpha:1.0];
     _innerGridColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     _drawInnerGrid = YES;
-    _bezierSmoothing = NO;
+    _bezierSmoothing = YES;
     _bezierSmoothingTension = 0.2;
     _lineWidth = 1;
     _innerGridLineWidth = 0.5;
     _axisLineWidth = 1;
     _animationDuration = 0.0;
-    _displayDataPoint = YES;
+    _displayDataPoint = NO;
     _dataPointRadius = 1;
     _dataPointColor = [UIColor redColor];
     _dataPointBackgroundColor = _color;
@@ -90,6 +93,8 @@
     }
     
     _data = [NSMutableArray arrayWithArray:chartData];
+    
+    NSLog(@"data obj: %@", _data[0]);
     
     [self computeBounds];
     
@@ -177,8 +182,12 @@
         itemIndex = _data.count - 1;
     }
     
-    NSString* text = _labelForIndex(itemIndex);
-    
+    NSString *alt = _data[itemIndex];
+    NSString* text = _labelForIndex(alt.integerValue);
+    //NSString* text = _labelForIndex(_data[itemIndex]);
+
+    NSLog(@"x axis string: %@", alt);
+    //NSString* text = _labelForIndex(i);
     if(!text)
     {
         return nil;
@@ -186,7 +195,8 @@
     
     CGPoint p = CGPointMake(_margin + index * (_axisWidth / _horizontalGridStep) * scale, _axisHeight + _margin);
     
-    CGRect rect = CGRectMake(_margin, p.y + 2, self.frame.size.width - _margin * 2 - 4.0f, 14);
+    //CGRect rect = CGRectMake(_margin, p.y + 2, self.frame.size.width - _margin * 2 - 4.0f, 14);
+    CGRect rect = CGRectMake(_margin, p.y + 2, self.frame.size.width - _margin * 2 - 4.0f, 1);
     
     float width = [text boundingRectWithSize:rect.size
                                      options:NSStringDrawingUsesLineFragmentOrigin
@@ -382,7 +392,7 @@
 
 - (CGFloat)minVerticalBound
 {
-    return _max - 400;
+    return _max - 200;
     //return MIN(_min, 0);
 }
 
@@ -405,8 +415,8 @@
         if([number floatValue] > _max)
             _max = [number floatValue];
     }
-    _max += 200;
-    _min = _max - 400;
+    _max += 100;
+    _min = _max - 200;
     /*
     // The idea is to adjust the minimun and the maximum value to display the whole chart in the view, and if possible with nice "round" steps.
     _max = [self getUpperRoundNumber:_max forGridStep:_verticalGridStep];

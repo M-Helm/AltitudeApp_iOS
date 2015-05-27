@@ -10,7 +10,7 @@
 		AD33D61E1ADDC6D2000955F8 /* DisplayContentSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = AD33D61D1ADDC6D2000955F8 /* DisplayContentSegue.m */; };
 		AD33D6211ADDC751000955F8 /* MenuDrawViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD33D6201ADDC751000955F8 /* MenuDrawViewController.m */; };
 		AD33D6241ADDC7A3000955F8 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = AD33D6231ADDC7A3000955F8 /* MenuViewController.m */; };
-		AD5E95711AE1AF0400B247E4 /* LineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5E95701AE1AF0400B247E4 /* LineChart.m */; };
+		AD5E95711AE1AF0400B247E4 /* AltitudeLineChart.m in Sources */ = {isa = PBXBuildFile; fileRef = AD5E95701AE1AF0400B247E4 /* AltitudeLineChart.m */; };
 		AD76FB4E1ADF377300F0B389 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD76FB4D1ADF377300F0B389 /* CoreMotion.framework */; };
 		ADB1A8F51B0789C3009FC973 /* ic_burger_44.png in Resources */ = {isa = PBXBuildFile; fileRef = ADB1A8F41B0789C3009FC973 /* ic_burger_44.png */; };
 		ADB7D96F1ADC4A3F00761587 /* fact_list_20150413.txt in Resources */ = {isa = PBXBuildFile; fileRef = ADB7D96E1ADC4A3F00761587 /* fact_list_20150413.txt */; };
@@ -46,8 +46,8 @@
 		AD33D6201ADDC751000955F8 /* MenuDrawViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuDrawViewController.m; sourceTree = "<group>"; };
 		AD33D6221ADDC776000955F8 /* MenuViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		AD33D6231ADDC7A3000955F8 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
-		AD5E95701AE1AF0400B247E4 /* LineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LineChart.m; sourceTree = "<group>"; };
-		AD5E95721AE1AF1800B247E4 /* LineChart.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LineChart.h; sourceTree = "<group>"; };
+		AD5E95701AE1AF0400B247E4 /* AltitudeLineChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AltitudeLineChart.m; sourceTree = "<group>"; };
+		AD5E95721AE1AF1800B247E4 /* AltitudeLineChart.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AltitudeLineChart.h; sourceTree = "<group>"; };
 		AD76FB4D1ADF377300F0B389 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		ADB1A8F41B0789C3009FC973 /* ic_burger_44.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_burger_44.png; sourceTree = "<group>"; };
 		ADB7D96E1ADC4A3F00761587 /* fact_list_20150413.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fact_list_20150413.txt; sourceTree = "<group>"; };
@@ -127,8 +127,8 @@
 				ADCB6C911AE3FE6A00BD0360 /* NSArray+AltitudeQueue.m */,
 				ADC788371AE2B51500EFFB9D /* ApplicationGlobals.h */,
 				ADC788381AE2B52900EFFB9D /* ApplicationGlobals.m */,
-				AD5E95721AE1AF1800B247E4 /* LineChart.h */,
-				AD5E95701AE1AF0400B247E4 /* LineChart.m */,
+				AD5E95721AE1AF1800B247E4 /* AltitudeLineChart.h */,
+				AD5E95701AE1AF0400B247E4 /* AltitudeLineChart.m */,
 				AD33D61F1ADDC71B000955F8 /* MenuDrawViewController.h */,
 				AD33D6201ADDC751000955F8 /* MenuDrawViewController.m */,
 				AD33D6221ADDC776000955F8 /* MenuViewController.h */,
@@ -285,7 +285,7 @@
 				ADECAAC81AD1E03E00779B02 /* MainViewController.m in Sources */,
 				ADCB6C921AE3FE6A00BD0360 /* NSArray+AltitudeQueue.m in Sources */,
 				AD33D6211ADDC751000955F8 /* MenuDrawViewController.m in Sources */,
-				AD5E95711AE1AF0400B247E4 /* LineChart.m in Sources */,
+				AD5E95711AE1AF0400B247E4 /* AltitudeLineChart.m in Sources */,
 				AD33D61E1ADDC6D2000955F8 /* DisplayContentSegue.m in Sources */,
 				ADECAAC51AD1E03E00779B02 /* AppDelegate.m in Sources */,
 				ADDFC50E1ADECD1E00634087 /* ButtonHandler.m in Sources */,

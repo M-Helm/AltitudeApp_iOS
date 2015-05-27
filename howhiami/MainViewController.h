@@ -10,7 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import <CoreMotion/CoreMotion.h>
 
-double hithere;
+//double hithere;
 
 
 @interface MainViewController : UIViewController <CLLocationManagerDelegate>

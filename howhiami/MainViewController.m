@@ -9,7 +9,7 @@
 #import "MainViewController.h"
 #import "DBManager.h"
 #import "ApplicationGlobals.h"
-#import "LineChart.h"
+#import "AltitudeLineChart.h"
 #import "NSArray+AltitudeQueue.h"
 #define IS_OS_8_OR_LATER ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
 
@@ -25,22 +25,22 @@ ApplicationGlobals *appGlobals;
 //NSMutableArray *altQueue;
 
 
-UIView *altView;
-UIView *barometerView;
-UIView *compassView;
-UIView *acclView;
-UIView *factView;
-UIView *utilView;
-UILabel *altLabel;
-UILabel *factLabel;
-UILabel *barometerLabel;
-UILabel *compassLabel;
-UILabel *acclLabel;
-UILabel *utilLabel;
+UIView* altView;
+//UIView* barometerView;
+UIView* compassView;
+UIView* acclView;
+UIView* factView;
+UIView* utilView;
+UILabel* altLabel;
+UILabel* factLabel;
+//UILabel* barometerLabel;
+UILabel* compassLabel;
+UILabel* acclLabel;
+UILabel* utilLabel;
 
-NSString *fact;
+NSString* fact;
 UIActivityIndicatorView *altSpinner;
-UIActivityIndicatorView *barometerSpinner;
+//UIActivityIndicatorView *barometerSpinner;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -74,10 +74,9 @@ UIActivityIndicatorView *barometerSpinner;
     //[dbManager dropTable:@"facts"];
     [dbManager getInitFacts];
     
-    
     NSArray *array = [dbManager getAltitudeArray];
     for(int i = 0; i<array.count; i++){
-        NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
         [dict setObject:@"0" forKey:@"timestamp"];
         [dict setObject:[array objectAtIndex:i] forKey:@"altitude"];
         [appGlobals.altitudeArray enqueue:dict];
@@ -115,6 +114,7 @@ UIActivityIndicatorView *barometerSpinner;
     [factView addSubview:factLabel];
     [self.view addSubview:factView];
     
+    /*
     barometerView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     barometerView.layer.borderWidth = 3;
     barometerView.layer.cornerRadius = 15;
@@ -122,6 +122,7 @@ UIActivityIndicatorView *barometerSpinner;
     barometerLabel.textAlignment = NSTextAlignmentCenter;
     barometerLabel.font = [UIFont systemFontOfSize:25];
     //barometerLabel.text = @"NA";
+     
     UILabel *barometerTitle = [[UILabel alloc] initWithFrame:CGRectMake(2,2,76,15)];
     barometerTitle.textAlignment = NSTextAlignmentCenter;
     barometerTitle.font = [UIFont systemFontOfSize:11];
@@ -129,6 +130,8 @@ UIActivityIndicatorView *barometerSpinner;
     [barometerLabel addSubview:barometerTitle];
     [barometerView addSubview:barometerLabel];
     [self.view addSubview:barometerView];
+    */
+    
     
     compassView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     compassView.layer.borderWidth = 3;
@@ -137,7 +140,7 @@ UIActivityIndicatorView *barometerSpinner;
     compassLabel.textAlignment = NSTextAlignmentCenter;
     compassLabel.font = [UIFont systemFontOfSize:25];
     
-    UILabel *compassTitle = [[UILabel alloc] initWithFrame:CGRectMake(2,2,76,15)];
+    UILabel *compassTitle = [[UILabel alloc] initWithFrame:CGRectMake(1,1,76,15)];
     compassTitle.textAlignment = NSTextAlignmentCenter;
     compassTitle.font = [UIFont systemFontOfSize:11];
     compassTitle.text = @"Heading";
@@ -150,11 +153,11 @@ UIActivityIndicatorView *barometerSpinner;
     acclView.layer.borderWidth = 3;
     acclView.layer.cornerRadius = 15;
     acclView.layer.masksToBounds = YES;
-    acclLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 80, 80)];
+    acclLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 80, 45)];
     acclLabel.textAlignment = NSTextAlignmentCenter;
-    acclLabel.font = [UIFont systemFontOfSize:25];
+    acclLabel.font = [UIFont systemFontOfSize:15];
     acclLabel.text = @"NA";
-    UILabel *acclTitle = [[UILabel alloc] initWithFrame:CGRectMake(2,2,76,15)];
+    UILabel *acclTitle = [[UILabel alloc] initWithFrame:CGRectMake(1,1,76,15)];
     acclTitle.textAlignment = NSTextAlignmentCenter;
     acclTitle.font = [UIFont systemFontOfSize:11];
     acclTitle.text = @"Accelerometer";
@@ -165,7 +168,7 @@ UIActivityIndicatorView *barometerSpinner;
     utilView.layer.borderColor = [UIColor lightGrayColor].CGColor;
     utilView.layer.borderWidth = 3;
     utilView.layer.cornerRadius = 15;
-    utilView.layer.masksToBounds = YES;
+    utilView.layer.masksToBounds = NO;
     [self.view addSubview:utilView];
     [self updateLabels:true];
     
@@ -209,7 +212,7 @@ UIActivityIndicatorView *barometerSpinner;
     //make sure this isn't the first location update and then that it's a significant update
     if([locations count] > 1){
         int i = (int)[locations count] - 1;
-        CLLocation *lstLoc = locations[i];
+        CLLocation* lstLoc = locations[i];
         self.currentLocation = [locations lastObject];
         double d = lstLoc.altitude - self.currentLocation.altitude;
         if(d < 0){
@@ -229,11 +232,11 @@ UIActivityIndicatorView *barometerSpinner;
     [self updateLabels:true];
 }
 - (void)addAltitudePoint{
-    NSNumber *altitude = [NSNumber numberWithInt:(int)self.currentLocation.altitude];
+    NSNumber* altitude = [NSNumber numberWithInt:(int)self.currentLocation.altitude];
     //NSNumber *altitude = [NSNumber numberWithInt:50];
     NSLog(@"alt: %@", altitude);
     NSTimeInterval timeInterval = [[NSDate date] timeIntervalSince1970];
-    NSNumber *timeStamp = [NSNumber numberWithInt:(int)timeInterval];
+    NSNumber* timeStamp = [NSNumber numberWithInt:(int)timeInterval];
     if((int)timeStamp - _lastTimestamp > 150){
         _lastTimestamp = (int)timeStamp;
         NSLog(@"time: %@", timeStamp);
@@ -269,31 +272,30 @@ UIActivityIndicatorView *barometerSpinner;
     //[self updateHeadingDisplays];
 }
 
--(LineChart*)chart1 {
-    NSMutableArray *chartData = [[NSMutableArray alloc] init];
+-(AltitudeLineChart*)chart1 {
+    NSMutableArray* chartData = [[NSMutableArray alloc] init];
     for(int i=0;i<appGlobals.altitudeArray.count;i++) {
-        NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+        NSMutableDictionary* dict = [[NSMutableDictionary alloc] init];
         dict = appGlobals.altitudeArray[i];
-        NSNumber *altitude = [dict valueForKey:@"altitude"];
+        NSNumber* altitude = [dict valueForKey:@"altitude"];
         //NSLog(@"ChartData Item: %@", altitude);
         [chartData addObject:altitude];
     }
     
-    LineChart* lineChart = [[LineChart alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width - 120, 140)];
+    AltitudeLineChart* lineChart = [[AltitudeLineChart alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width - 20, 140)];
     lineChart.verticalGridStep = 5;
     lineChart.horizontalGridStep = 9;
-    NSLog(@"sig 1");
+    
+    //x axis labels
     lineChart.labelForIndex = ^(NSUInteger item) {
         return [NSString stringWithFormat:@"%lu",(unsigned long)item];
     };
-    NSLog(@"sig 2");
+    
+    //y axis labels
     lineChart.labelForValue = ^(CGFloat value) {
         return [NSString stringWithFormat:@"%.f", value];
     };
-    NSLog(@"sig 3");
     [lineChart setChartData:chartData];
-    //[lineChart setChartData:appGlobals.altitudeArray];
-    NSLog(@"sig 4");
     return lineChart;
 }
 
@@ -303,24 +305,26 @@ UIActivityIndicatorView *barometerSpinner;
     altView = [[UIView alloc] initWithFrame:CGRectMake(10, 100, xCo-20, 115)];
     altLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, xCo-30, 100)];
     factView = [[UIView alloc] initWithFrame:CGRectMake(10, 225, xCo-120, 140)];
-    barometerView = [[UIView alloc] initWithFrame:CGRectMake(xCo-100, 225, 90, 90)];
-    barometerLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 80, 80)];
-    compassView = [[UIView alloc] initWithFrame:CGRectMake(xCo-100, 325, 90, 90)];
+    //barometerView = [[UIView alloc] initWithFrame:CGRectMake(xCo-100, 225, 90, 90)];
+    //barometerLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 80, 80)];
+    //compassView = [[UIView alloc] initWithFrame:CGRectMake(xCo-100, 325, 90, 90)];
+    //compassLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 80, 80)];
+    compassView = [[UIView alloc] initWithFrame:CGRectMake(xCo-100, 225, 90, 90)];
     compassLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 80, 80)];
-    acclView = [[UIView alloc] initWithFrame:CGRectMake(xCo-100, 425, 90, 90)];
-    utilView = [[UIView alloc] initWithFrame:CGRectMake(10, 375, xCo-120, 140)];
+    acclView = [[UIView alloc] initWithFrame:CGRectMake(xCo-100, 320, 90, 45)];
+    utilView = [[UIView alloc] initWithFrame:CGRectMake(10, 375, xCo-20, 140)];
     altSpinner = [[UIActivityIndicatorView alloc]
                   initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     altSpinner.center = CGPointMake(40, 40);
     altSpinner.hidesWhenStopped = YES;
-    barometerSpinner = [[UIActivityIndicatorView alloc]
-                        initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    barometerSpinner.center = CGPointMake(40,40);
-    barometerSpinner.hidesWhenStopped = YES;
+   // barometerSpinner = [[UIActivityIndicatorView alloc]
+   //                     initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+   // barometerSpinner.center = CGPointMake(40,40);
+   // barometerSpinner.hidesWhenStopped = YES;
     [compassLabel addSubview:altSpinner];
-    [barometerLabel addSubview:barometerSpinner];
+   // [barometerLabel addSubview:barometerSpinner];
     [altSpinner startAnimating];
-    [barometerSpinner startAnimating];
+   // [barometerSpinner startAnimating];
     
 }
 
